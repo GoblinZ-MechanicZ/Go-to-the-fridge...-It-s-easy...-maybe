@@ -184,8 +184,8 @@ MonoBehaviour:
   - {fileID: 6878349509668250409, guid: d861996534f3df744ba539dacdac3679, type: 3}
   prefRoomCross:
   - {fileID: 5980192465745195185, guid: aa17256aefc0d0848a73f97cc9a304ea, type: 3}
-  prefRoomStart: {fileID: 4949571739873388970, guid: 354c3d0360f05f44bb851839817c04ce, type: 3}
-  prefRoomFinish: {fileID: 4949571739873388970, guid: 354c3d0360f05f44bb851839817c04ce, type: 3}
+  prefRoomStart: {fileID: 5858183504144842278, guid: 7a450ac4fb22a0a458a8032e9dfc2d29, type: 3}
+  prefRoomFinish: {fileID: 5858183504144842278, guid: 7a450ac4fb22a0a458a8032e9dfc2d29, type: 3}
   wallAttributes:
   - {fileID: 1380115119466046711, guid: 5f887b3aa9cc6ab43aa74abde791733f, type: 3}
   floorAttributes:
