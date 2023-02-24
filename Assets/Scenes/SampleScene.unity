@@ -184,8 +184,8 @@ MonoBehaviour:
   - {fileID: 6878349509668250409, guid: d861996534f3df744ba539dacdac3679, type: 3}
   prefRoomCross:
   - {fileID: 5980192465745195185, guid: aa17256aefc0d0848a73f97cc9a304ea, type: 3}
-  prefRoomStart: {fileID: 5858183504144842278, guid: 7a450ac4fb22a0a458a8032e9dfc2d29, type: 3}
-  prefRoomFinish: {fileID: 5858183504144842278, guid: 7a450ac4fb22a0a458a8032e9dfc2d29, type: 3}
+  prefRoomStart: {fileID: 8656170820676033498, guid: 8fabad9b563e2ed40a7bc20444e08605, type: 3}
+  prefRoomFinish: {fileID: 788993021232169032, guid: a60c9f2e25ec78d4a910ede0767696c4, type: 3}
   wallAttributes:
   - {fileID: 1380115119466046711, guid: 5f887b3aa9cc6ab43aa74abde791733f, type: 3}
   floorAttributes:
@@ -443,9 +443,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 1.5
+  near clip plane: 1.6
   far clip plane: 1000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
