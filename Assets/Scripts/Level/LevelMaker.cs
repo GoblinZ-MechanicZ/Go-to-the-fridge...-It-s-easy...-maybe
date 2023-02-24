@@ -13,8 +13,8 @@ public class LevelMaker : MonoBehaviour
         Path,
         Start,
         Finish
-
     }
+
     public class IntVector2
     {
         public int x { get; set; }
@@ -90,7 +90,6 @@ public class LevelMaker : MonoBehaviour
         // List<IntVector2> transition;
         //!!!!!!!!!!!!!!!!
 
-
         public Maze(IntVector2 maxSize, float fill)
         {
             createMaze(maxSize, fill);
@@ -163,9 +162,6 @@ public class LevelMaker : MonoBehaviour
 
             mazeMatrix[pos.x, pos.y].setState(MazeBlockState.Room);
 
-
-
-
             if ((pos.y == 0 || pos.y == mazeMatrix.GetLength(1) - 1) && pos.x > 0 && pos.x < mazeMatrix.GetLength(0) - 1)
             {
                 //Vert
@@ -194,7 +190,6 @@ public class LevelMaker : MonoBehaviour
 
         void MakePath()
         {
-
             int _i = 0;
             List<IntVector2> path = new List<IntVector2>();
             path.Add(curPos);
@@ -284,12 +279,15 @@ public class LevelMaker : MonoBehaviour
 
     }
 
-[Header("Maze size")]
+    [SerializeField] private Transform mazeParent;
+    [SerializeField] private CameraFollow cameraFollow;
+
+    [Header("Maze size")]
     [SerializeField] int maxSizeX = 10;
     [SerializeField] int maxSizeY = 10;
-[Header("Maze fill")]
+    [Header("Maze fill")]
     [Range(0.01f, 1f)][SerializeField] float mazeFillValue = 0.75f;
-[Header("Maze blocks")]
+    [Header("Maze blocks")]
     [SerializeField] Vector3 blockSize = new Vector3(1, 1, 1);
     [SerializeField] GameObject prefBorder = null;
     [SerializeField] GameObject[] prefRoomLoop = null;
@@ -298,35 +296,28 @@ public class LevelMaker : MonoBehaviour
     [SerializeField] GameObject[] prefRoomTries = null;
     [SerializeField] GameObject[] prefRoomCross = null;
     // [SerializeField] GameObject prefWay = null;
-[Header("Primary Attributes")]
+    [Header("Primary Attributes")]
     [SerializeField] GameObject prefRoomStart = null;
     [SerializeField] GameObject prefRoomFinish = null;
-[Header("Secondary Attributes")]
+    [Header("Secondary Attributes")]
     [SerializeField] GameObject[] wallAttributes = null;
     [SerializeField] GameObject[] floorAttributes = null;
     [SerializeField] GameObject[] roofAttributes = null;
-[Header("Characters")]
+    [Header("Characters")]
     [SerializeField] GameObject prefCharacter = null;
     [SerializeField] int maxEnemyOnLevel = 10;
     [SerializeField] GameObject[] prefEnemy = null;
     // [SerializeField] GameObject prefDoor = null;
-    
 
     IntVector2 maxSizeMatrix;
     Maze maze;
     int EnemyOnLevel = 0;
-    
+
     void Start()
     {
         maxSizeMatrix = new IntVector2(maxSizeX, maxSizeY);
         maze = new Maze(maxSizeMatrix, mazeFillValue);
         mazeInstans(maze);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void mazeInstans(Maze _maze)
@@ -346,41 +337,49 @@ public class LevelMaker : MonoBehaviour
 
                 if (_pref != null)
                 {
-                    GameObject go = Instantiate(_pref, pos, Quaternion.identity);
-                    go.transform.eulerAngles = new Vector3(0, angle,0);
+                    GameObject go = Instantiate(_pref, pos, Quaternion.identity, mazeParent);
+                    go.transform.eulerAngles = new Vector3(0, angle, 0);
                     go.name = MBI.name;
                 }
 
-                if (MBI.getState()==MazeBlockState.Start) {
+                if (MBI.getState() == MazeBlockState.Start)
+                {
                     GameObject character = Instantiate(prefCharacter, pos, Quaternion.identity);
-                    character.transform.eulerAngles = new Vector3(0, angle,0);
-                } 
-                
-                if (MBI.getState()==MazeBlockState.Room&&EnemyOnLevel<maxEnemyOnLevel) {
-                    int fillState = (int)((100*maxSizeMatrix.y*maxSizeMatrix.x) / ((maxSizeMatrix.y-2)*my + mx));
+                    character.transform.eulerAngles = new Vector3(0, angle, 0);
+                    character.name = "Goblin_Character";
+                    cameraFollow.SetTarget(character.transform.GetChild(0).gameObject);
+                }
+
+                if (MBI.getState() == MazeBlockState.Room && EnemyOnLevel < maxEnemyOnLevel)
+                {
+                    int fillState = (int)((100 * maxSizeMatrix.y * maxSizeMatrix.x) / ((maxSizeMatrix.y - 2) * my + mx));
                     int chanceAnimals = UnityEngine.Random.Range(0, fillState);
-                    if (chanceAnimals<=(maxEnemyOnLevel- EnemyOnLevel)) {
+                    if (chanceAnimals <= (maxEnemyOnLevel - EnemyOnLevel))
+                    {
                         GameObject pref = prefEnemy[(int)(UnityEngine.Random.Range(0, prefEnemy.Length - 1))];
-                        Instantiate(pref, pos, Quaternion.identity);
+                        Instantiate(pref, pos, Quaternion.identity, mazeParent);
                         EnemyOnLevel++;
-                    } else {
+                    }
+                    else
+                    {
                         int chanceAcces = UnityEngine.Random.Range(0, 5);
-                        if (chanceAcces==1&&wallAttributes!=null&&wallAttributes.Length>0){
-                            GameObject wallGO = Instantiate(wallAttributes[(int)(UnityEngine.Random.Range(0, wallAttributes.Length - 1))], pos, Quaternion.identity);
-                            wallGO.transform.eulerAngles = new Vector3(0, (UnityEngine.Random.Range(0, 3)*90) ,0);
+                        if (chanceAcces == 1 && wallAttributes != null && wallAttributes.Length > 0)
+                        {
+                            GameObject wallGO = Instantiate(wallAttributes[(int)(UnityEngine.Random.Range(0, wallAttributes.Length - 1))], pos, Quaternion.identity, mazeParent);
+                            wallGO.transform.eulerAngles = new Vector3(0, (UnityEngine.Random.Range(0, 3) * 90), 0);
                         }
-                        if (chanceAcces==2&&floorAttributes!=null&&floorAttributes.Length>0){
-                            GameObject floorGO = Instantiate(floorAttributes[(int)(UnityEngine.Random.Range(0, floorAttributes.Length - 1))], pos, Quaternion.identity);
-                            floorGO.transform.eulerAngles = new Vector3(0, (UnityEngine.Random.Range(0, 3)*90) ,0);
+                        if (chanceAcces == 2 && floorAttributes != null && floorAttributes.Length > 0)
+                        {
+                            GameObject floorGO = Instantiate(floorAttributes[(int)(UnityEngine.Random.Range(0, floorAttributes.Length - 1))], pos, Quaternion.identity, mazeParent);
+                            floorGO.transform.eulerAngles = new Vector3(0, (UnityEngine.Random.Range(0, 3) * 90), 0);
                         }
-                        if (chanceAcces==3&&roofAttributes!=null&&roofAttributes.Length>0){
-                            GameObject roofGO = Instantiate(roofAttributes[(int)(UnityEngine.Random.Range(0, roofAttributes.Length - 1))], pos, Quaternion.identity);
-                            roofGO.transform.eulerAngles = new Vector3(0, (UnityEngine.Random.Range(0, 3)*90) ,0);
+                        if (chanceAcces == 3 && roofAttributes != null && roofAttributes.Length > 0)
+                        {
+                            GameObject roofGO = Instantiate(roofAttributes[(int)(UnityEngine.Random.Range(0, roofAttributes.Length - 1))], pos, Quaternion.identity, mazeParent);
+                            roofGO.transform.eulerAngles = new Vector3(0, (UnityEngine.Random.Range(0, 3) * 90), 0);
                         }
                     }
                 }
-                
-
             }
         }
     }
@@ -402,11 +401,11 @@ public class LevelMaker : MonoBehaviour
                         //добавить выборку для старт/финиш
 
                         blockPref = prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
-                        
-                        if (block.getTransition()[0].x>0) {angle = 90;}
-                        if (block.getTransition()[0].x<0) {angle = -90;}
-                        if (block.getTransition()[0].y>0) {angle = 0;}
-                        if (block.getTransition()[0].y<0) {angle = 180;}
+
+                        if (block.getTransition()[0].x > 0) { angle = 90; }
+                        if (block.getTransition()[0].x < 0) { angle = -90; }
+                        if (block.getTransition()[0].y > 0) { angle = 0; }
+                        if (block.getTransition()[0].y < 0) { angle = 180; }
                         break;
                     case 2:
                         int x1 = 0; int y1 = 0;
@@ -415,18 +414,20 @@ public class LevelMaker : MonoBehaviour
                             x1 += item.x;
                             y1 += item.y;
                         }
-                        if (block.getTransition()[0].x+block.getTransition()[1].x!=0) {
+                        if (block.getTransition()[0].x + block.getTransition()[1].x != 0)
+                        {
                             blockPref = prefRoomTurn[(int)(UnityEngine.Random.Range(0, prefRoomTurn.Length - 1))];
-                            if (x1==1&&y1==1) angle=-90;
-                            if (x1==1&&y1==-1) angle=0;
-                            if (x1==-1&&y1==-1) angle=90;
-                            if (x1==-1&&y1==1) angle=180;
-                            }
-                        else {
+                            if (x1 == 1 && y1 == 1) angle = -90;
+                            if (x1 == 1 && y1 == -1) angle = 0;
+                            if (x1 == -1 && y1 == -1) angle = 90;
+                            if (x1 == -1 && y1 == 1) angle = 180;
+                        }
+                        else
+                        {
                             blockPref = prefRoomTunel[(int)(UnityEngine.Random.Range(0, prefRoomTunel.Length - 1))];
-                            if (block.getTransition()[0].x != 0 ) angle=90; else angle=0;
-                            
-                            }
+                            if (block.getTransition()[0].x != 0) angle = 90; else angle = 0;
+
+                        }
                         break;
                     case 3:
                         blockPref = prefRoomTries[(int)(UnityEngine.Random.Range(0, prefRoomTries.Length - 1))];
@@ -436,35 +437,35 @@ public class LevelMaker : MonoBehaviour
                             x2 += item.x;
                             y2 += item.y;
                         }
-                        if (x2>0) {angle = 180;}
-                        if (x2<0) {angle = 0;}
-                        if (y2>0) {angle = 90;}
-                        if (y2<0) {angle = -90;}
+                        if (x2 > 0) { angle = 180; }
+                        if (x2 < 0) { angle = 0; }
+                        if (y2 > 0) { angle = 90; }
+                        if (y2 < 0) { angle = -90; }
 
                         break;
-                        case 4:
+                    case 4:
                         blockPref = prefRoomCross[(int)(UnityEngine.Random.Range(0, prefRoomCross.Length - 1))];
                         break;
                 }
 
                 break;
             case MazeBlockState.Start:
-               blockPref = prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
-                        
-                        if (block.getTransition()[0].x>0) {angle = 90;}
-                        if (block.getTransition()[0].x<0) {angle = -90;}
-                        if (block.getTransition()[0].y>0) {angle = 0;}
-                        if (block.getTransition()[0].y<0) {angle = 180;}
+                blockPref = prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
+
+                if (block.getTransition()[0].x > 0) { angle = 90; }
+                if (block.getTransition()[0].x < 0) { angle = -90; }
+                if (block.getTransition()[0].y > 0) { angle = 0; }
+                if (block.getTransition()[0].y < 0) { angle = 180; }
                 break;
             case MazeBlockState.Finish:
                 blockPref = prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
-                        
-                        if (block.getTransition()[0].x>0) {angle = 90;}
-                        if (block.getTransition()[0].x<0) {angle = -90;}
-                        if (block.getTransition()[0].y>0) {angle = 0;}
-                        if (block.getTransition()[0].y<0) {angle = 180;}
+
+                if (block.getTransition()[0].x > 0) { angle = 90; }
+                if (block.getTransition()[0].x < 0) { angle = -90; }
+                if (block.getTransition()[0].y > 0) { angle = 0; }
+                if (block.getTransition()[0].y < 0) { angle = 180; }
                 break;
-            
+
             default:
 
                 break;
