@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4134464035648133660}
   - component: {fileID: 2815802109388259180}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wall left 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6133464892367565411}
   - component: {fileID: 8188981355092016759}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wall front 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8863652452102563858}
   - component: {fileID: 5627520926139058045}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wall right 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8044573611571714324}
   - component: {fileID: 8155058907780107813}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wall left 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 698346851118402269}
   - component: {fileID: 5617131897372672274}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wall right 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4802363358499605589}
   - component: {fileID: 6669996361841852604}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wall back 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -515,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7658580959169673124}
   - component: {fileID: 7098913236319043714}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: floor
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -560,7 +560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2446517849368000650}
   - component: {fileID: 3791979378728855136}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wall front 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -605,7 +605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4333107346442961844}
   - component: {fileID: 3535851914337550182}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wall back 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
