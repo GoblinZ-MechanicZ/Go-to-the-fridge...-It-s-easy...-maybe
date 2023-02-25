@@ -22,20 +22,16 @@ public class PatrolState : State
         Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.right * 4, 4f) &&
         Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), -transform.right * 4, 4f) 
         && _startMovement == false && _startRotation == false)
-            StartCoroutine(Rotate(transform.right));
+            Rotate(transform.right);
     }
 
-    private IEnumerator Rotate(Vector3 direction)
+    private void Rotate(Vector3 direction)
     {
         _startRotation = true;
-        float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
 
-        while(transform.eulerAngles.y == angle)
-        {
-            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, angle, 0), 0.005f);
-            yield return null;
-        }
+        float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
         transform.eulerAngles = new Vector3(0, angle, 0);
+
         _startRotation = false;
     }
 
@@ -55,7 +51,7 @@ public class PatrolState : State
         {
             _currentPoint = transform.position + (direction * 4f);
             var angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            StartCoroutine(Rotate(direction));
+            Rotate(direction);
 
             _startMovement = true;
             StartCoroutine(Move(_currentPoint));
