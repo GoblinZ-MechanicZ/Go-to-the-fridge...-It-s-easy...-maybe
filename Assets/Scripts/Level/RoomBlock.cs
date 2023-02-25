@@ -12,8 +12,10 @@ public struct RoomDirections
 public class RoomBlock : MonoBehaviour
 {
 
+    public RoomDirections RoomDirections { get { return _roomDirections; } }
+    public LevelMaker.MazeBlockState BlockState { get { return mazeBlockInfo.getState(); }}
+
     private LevelMaker.MazeBlockInfo mazeBlockInfo;
-    public RoomDirections roomDirections { get { return _roomDirections; } }
     private RoomDirections _roomDirections;
 
     public void InitRoom(LevelMaker.MazeBlockInfo info)

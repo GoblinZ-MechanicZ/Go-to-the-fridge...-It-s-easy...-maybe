@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private LookDirection goblinLookDir = LookDirection.Forward;
     [SerializeField] private float distanceMovement = 4f;
     [SerializeField] private float movementSpeed = 5f;
-    [SerializeField] private float turnCooldown = 2f;
+    [SerializeField] private float turnSpeed = 2f;
     [SerializeField] private bool inMiddle = false;
     [SerializeField] private float middleThreshold = 0.5f;
     [SerializeField] private string middleTag = "Middle";
@@ -38,6 +38,7 @@ public class CharacterController : MonoBehaviour
     private int _look = 0;
 
     private Vector3 startMovement, endMovement;
+    private Quaternion startRotate, endRotate;
 
     private void Start()
     {
@@ -46,16 +47,6 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
-        if (_turnTimer > 0f)
-        {
-            _turnTimer = Mathf.Clamp(_turnTimer - Time.deltaTime, 0, turnCooldown);
-        }
-        else if (_isTurn)
-        {
-            var gobEuler = goblinAnimator.transform.localEulerAngles;
-            goblinAnimator.transform.localEulerAngles = new Vector3(gobEuler.x, SnapRotation(goblinAnimator.transform.localEulerAngles.y), gobEuler.z);
-            _isTurn = false;
-        }
 
         if (_renewTimer > 0f)
         {
@@ -117,14 +108,15 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void OnJarFound() {
+    public void OnJarFound()
+    {
         smetanaJar.SetActive(true);
     }
 
     //return true if can't move
     private bool HandleMovement(float dir)
     {
-        if(_turnTimer > 0f) return false;
+        if (_turnTimer > 0f) return false;
 
         if (IsMoving)
         {
@@ -134,14 +126,15 @@ public class CharacterController : MonoBehaviour
             _movementTimer += Time.deltaTime;
 
             transform.localPosition = Vector3.Lerp(startMovement, endMovement, _movementTimer / movementSpeed);
-            if(_movementTimer / movementSpeed >= 1) {
+            if (_movementTimer / movementSpeed >= 1)
+            {
                 _isMoving = false;
                 goblinAnimator.SetBool("Forward", false);
                 goblinAnimator.SetBool("Backward", false);
             }
             return false;
         }
-        
+
         if (dir == 0) { return false; }
 
         if (dir > 0f)
@@ -155,7 +148,7 @@ public class CharacterController : MonoBehaviour
                 goblinAnimator.SetBool("Forward", true);
                 goblinAnimator.SetBool("Backward", false);
                 _isMoving = true;
-                endMovement = transform.localPosition + goblinAnimator.transform.forward * distanceMovement;
+                endMovement = transform.localPosition + GetDirection() * distanceMovement;
             }
         }
         else
@@ -169,7 +162,7 @@ public class CharacterController : MonoBehaviour
                 goblinAnimator.SetBool("Forward", false);
                 goblinAnimator.SetBool("Backward", true);
                 _isMoving = true;
-                endMovement = transform.localPosition - goblinAnimator.transform.forward * distanceMovement;
+                endMovement = transform.localPosition - GetDirection() * distanceMovement;
             }
         }
 
@@ -181,6 +174,17 @@ public class CharacterController : MonoBehaviour
 
     private void HandleTurn(float dir)
     {
+        if (_turnTimer > 0f)
+        {
+            _turnTimer = Mathf.Clamp(_turnTimer - Time.deltaTime, 0, turnSpeed);
+            goblinAnimator.transform.rotation = Quaternion.Lerp(startRotate, endRotate, (turnSpeed - _turnTimer) / turnSpeed);
+        }
+        else if (_isTurn)
+        {
+            var gobEuler = goblinAnimator.transform.localEulerAngles;
+            _isTurn = false;
+        }
+
         if (dir != 0f && inMiddle && _turnTimer <= 0f)
         {
             if (dir > 0f)
@@ -206,7 +210,9 @@ public class CharacterController : MonoBehaviour
 
             goblinAnimator.ResetTrigger("Attack");
             goblinAnimator.ResetTrigger("HevyAttack");
-            _turnTimer = turnCooldown;
+            _turnTimer = turnSpeed;
+            startRotate = goblinAnimator.transform.rotation;
+            endRotate = Quaternion.Euler(0f, GetDirectionAngle(), 0f);
         }
     }
 
@@ -241,7 +247,6 @@ public class CharacterController : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Enter new room!");
         currentBlock = collider.GetComponentInParent<RoomBlock>();
     }
 
@@ -250,13 +255,13 @@ public class CharacterController : MonoBehaviour
         switch (goblinLookDir)
         {
             case (LookDirection.Forward):
-                return currentBlock.roomDirections.forward;
+                return currentBlock.RoomDirections.forward;
             case (LookDirection.Right):
-                return currentBlock.roomDirections.right;
+                return currentBlock.RoomDirections.right;
             case (LookDirection.Backward):
-                return currentBlock.roomDirections.backward;
+                return currentBlock.RoomDirections.backward;
             case (LookDirection.Left):
-                return currentBlock.roomDirections.left;
+                return currentBlock.RoomDirections.left;
         }
         return false;
     }
@@ -266,15 +271,47 @@ public class CharacterController : MonoBehaviour
         switch ((LookDirection)temp)
         {
             case (LookDirection.Forward):
-                return currentBlock.roomDirections.forward;
+                return currentBlock.RoomDirections.forward;
             case (LookDirection.Right):
-                return currentBlock.roomDirections.right;
+                return currentBlock.RoomDirections.right;
             case (LookDirection.Backward):
-                return currentBlock.roomDirections.backward;
+                return currentBlock.RoomDirections.backward;
             case (LookDirection.Left):
-                return currentBlock.roomDirections.left;
+                return currentBlock.RoomDirections.left;
         }
         return false;
+    }
+
+    private Vector3 GetDirection()
+    {
+        switch (goblinLookDir)
+        {
+            case (LookDirection.Forward):
+                return Vector3.forward;
+            case (LookDirection.Right):
+                return Vector3.right;
+            case (LookDirection.Backward):
+                return -Vector3.forward;
+            case (LookDirection.Left):
+                return Vector3.left;
+        }
+        return Vector3.forward;
+    }
+    
+    private float GetDirectionAngle()
+    {
+        switch (goblinLookDir)
+        {
+            case (LookDirection.Forward):
+                return 0;
+            case (LookDirection.Right):
+                return 90;
+            case (LookDirection.Backward):
+                return 180;
+            case (LookDirection.Left):
+                return 270;
+        }
+        return 0;
     }
 
     private void OnTriggerExit(Collider collider)
@@ -285,32 +322,5 @@ public class CharacterController : MonoBehaviour
         }
 
         inMiddle = false;
-    }
-
-    private float SnapRotation(float y)
-    {
-        float result = 0f;
-        if (y < 45f)
-        {
-            result = 0f;
-        }
-        else if (y < 135f)
-        {
-            result = 90f;
-        }
-        else if (y < 225f)
-        {
-            result = 180f;
-        }
-        else if (y < 315f)
-        {
-            result = 270f;
-        }
-        else
-        {
-            result = 360f;
-        }
-
-        return result;
     }
 }
