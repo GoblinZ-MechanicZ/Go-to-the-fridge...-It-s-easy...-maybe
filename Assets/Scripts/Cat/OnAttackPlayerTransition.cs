@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OnAttackPlayerTransition : Transition
 {
-    private void OnEnable() 
+    private void Update()
     {
         
     }

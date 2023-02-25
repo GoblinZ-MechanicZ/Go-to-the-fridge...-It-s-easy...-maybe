@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class EndFearTransition : Transition
 {
-    [SerializeField] private float _distanceToEnd;
     private void Update() 
     {
-        if(Vector3.Distance(transform.position, Target.transform.position) >= _distanceToEnd)
+        if(GetComponent<FearState>().NumberOfCurrentPoint == 0)
             NeedTransit = true;
     }
 }

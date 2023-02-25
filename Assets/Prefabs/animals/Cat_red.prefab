@@ -682,6 +682,9 @@ GameObject:
   - component: {fileID: 5573562151521714867}
   - component: {fileID: -480554030043136079}
   - component: {fileID: 6932035676379719514}
+  - component: {fileID: 1522255698641081727}
+  - component: {fileID: 7260897118510351764}
+  - component: {fileID: 1443700251513336279}
   m_Layer: 0
   m_Name: Cat_red
   m_TagString: Untagged
@@ -770,6 +773,47 @@ MonoBehaviour:
   _transitions: []
   _speed: 1
   _distanceTreshhold: 1
+--- !u!114 &1522255698641081727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420035634522699076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d4621c17464a44cb2da0ca76bd8a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 0
+--- !u!114 &7260897118510351764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420035634522699076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ecf873cb157ec429a1c88c6b6bad70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions: []
+  _passedPointsCount: 0
+  PassedPoints: []
+--- !u!114 &1443700251513336279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420035634522699076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc1b468dc1fb3fa4aafa19e2d9df0ee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetState: {fileID: 0}
 --- !u!1 &3455137608551339557
 GameObject:
   m_ObjectHideFlags: 0

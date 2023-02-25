@@ -5,13 +5,16 @@ using UnityEngine;
 public class PatrolState : State
 {
     [Header("CatSettings")]
-    [SerializeField] private float _speed;
-    [SerializeField] private float _distanceTreshhold;
-
     private Vector3 _currentPoint;
+    private CatMovement _cat;
+    private FearState _fearState;
 
-    private bool _startMovement = false;
-    private bool _startRotation = false;
+    private void OnEnable()
+    {
+        _cat = GetComponent<CatMovement>();
+        _fearState = GetComponent<FearState>();
+    }
+
     private void Update() 
     {
         Raycast(transform.forward);
@@ -21,42 +24,26 @@ public class PatrolState : State
         if(Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.forward * 4, 4f) && 
         Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.right * 4, 4f) &&
         Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), -transform.right * 4, 4f) 
-        && _startMovement == false && _startRotation == false)
-            Rotate(transform.right);
-    }
-
-    private void Rotate(Vector3 direction)
-    {
-        _startRotation = true;
-
-        float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        transform.eulerAngles = new Vector3(0, angle, 0);
-
-        _startRotation = false;
-    }
-
-    private IEnumerator Move(Vector3 point)
-    {
-        while(transform.position != point)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, point, _speed * Time.deltaTime);
-            yield return new WaitForSeconds(0.01f);
-        }
-        _startMovement = false;
+        && _cat.StartMovement == false && _cat.StartRotation == false)
+            _cat.Rotate(transform.right);
     }
 
     private void Raycast(Vector3 direction)
     {
-        if(Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), direction * 4, 4f) == false && _startMovement == false)
+        if(Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), direction * 4, 4f) == false && _cat.StartMovement == false)
         {
             _currentPoint = transform.position + (direction * 4f);
-            var angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            Rotate(direction);
+            if(_fearState.PassedPoints.Count < _fearState.PassedPointsCount)
+                _fearState.PassedPoints.Add(_currentPoint);
+            else
+            {
+                _fearState.PassedPoints.RemoveAt(0);
+                _fearState.PassedPoints.Add(_currentPoint);
+            }
+            
+            _cat.Rotate(direction);
 
-            _startMovement = true;
-            StartCoroutine(Move(_currentPoint));
-
-            Debug.Log(_currentPoint);
+            StartCoroutine(_cat.Move(_currentPoint));
         }
     }
 

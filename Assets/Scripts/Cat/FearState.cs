@@ -2,17 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FearState : MonoBehaviour
+public class FearState : State
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int _passedPointsCount;
+    public int PassedPointsCount => _passedPointsCount;
+    public List<Vector3> PassedPoints {get; set;} = new();
+    private CatMovement _cat;
+    private int _numberOfCurrentPoint;
+    public int NumberOfCurrentPoint => _numberOfCurrentPoint;
+
+    private void OnEnable() 
     {
-        
+        _cat = GetComponent<CatMovement>();
+        _numberOfCurrentPoint = _passedPointsCount - 1;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if(_cat.StartMovement == false)
+        {
+            StartCoroutine(_cat.Move(PassedPoints[_numberOfCurrentPoint]));
+            var direction = PassedPoints[_numberOfCurrentPoint] - transform.position;
+            _cat.Rotate(direction);
+        }
+        if(transform.position == PassedPoints[_numberOfCurrentPoint] && _numberOfCurrentPoint >= 1)
+        {
+            _numberOfCurrentPoint = (_numberOfCurrentPoint - 1) % _passedPointsCount;
+        }
     }
 }
