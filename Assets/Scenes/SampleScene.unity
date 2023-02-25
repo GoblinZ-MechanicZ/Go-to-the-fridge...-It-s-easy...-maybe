@@ -188,6 +188,7 @@ MonoBehaviour:
   prefRoomFinish: {fileID: 788993021232169032, guid: a60c9f2e25ec78d4a910ede0767696c4, type: 3}
   wallAttributes:
   - {fileID: 1380115119466046711, guid: 5f887b3aa9cc6ab43aa74abde791733f, type: 3}
+  - {fileID: 5158018672920192654, guid: 35a64c0820710bd4c974b947ea5a641a, type: 3}
   floorAttributes:
   - {fileID: 670326960915604201, guid: e3fd9c1dfcab61e48aad7423dd339002, type: 3}
   - {fileID: 9007303703395281010, guid: c2679506267fea6489c2309966b89956, type: 3}
@@ -315,7 +316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -328,7 +329,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 9.31
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
