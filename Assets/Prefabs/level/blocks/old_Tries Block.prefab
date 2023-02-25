@@ -480,7 +480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7738981830075890684}
   m_Layer: 0
-  m_Name: Tries Block
+  m_Name: old_Tries Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

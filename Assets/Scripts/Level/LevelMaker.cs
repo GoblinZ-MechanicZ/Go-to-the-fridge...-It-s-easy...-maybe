@@ -452,7 +452,8 @@ public class LevelMaker : MonoBehaviour
 
                 break;
             case MazeBlockState.Start:
-                blockPref = prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
+                blockPref = prefRoomStart;
+                // /prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
 
                 if (block.getTransition()[0].x > 0) { angle = 90; }
                 if (block.getTransition()[0].x < 0) { angle = -90; }
@@ -460,7 +461,8 @@ public class LevelMaker : MonoBehaviour
                 if (block.getTransition()[0].y < 0) { angle = 180; }
                 break;
             case MazeBlockState.Finish:
-                blockPref = prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
+                blockPref = prefRoomFinish;
+                // prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
 
                 if (block.getTransition()[0].x > 0) { angle = 90; }
                 if (block.getTransition()[0].x < 0) { angle = -90; }
