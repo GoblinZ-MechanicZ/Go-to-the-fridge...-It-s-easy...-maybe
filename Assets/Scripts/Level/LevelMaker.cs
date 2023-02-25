@@ -340,6 +340,8 @@ public class LevelMaker : MonoBehaviour
                     GameObject go = Instantiate(_pref, pos, Quaternion.identity, mazeParent);
                     go.transform.eulerAngles = new Vector3(0, angle, 0);
                     go.name = MBI.name;
+                    var roomBlock = go.AddComponent<RoomBlock>();
+                    roomBlock.InitRoom(MBI);
                 }
 
                 if (MBI.getState() == MazeBlockState.Start)
