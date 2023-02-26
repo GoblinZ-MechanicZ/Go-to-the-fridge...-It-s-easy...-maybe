@@ -16,7 +16,10 @@ public class HuntToAttackTransition : Transition
     private void Update() 
     {
         if(Vector3.Distance(transform.position, Target.transform.position) <= _distanceToAttack
-        && Physics.Raycast(_cat.Front.position, Target.transform.position, Vector3.Distance(_cat.Front.position, Target.transform.position), LayerMask.NameToLayer("Player")) == false)  
+        && Physics.Raycast(_cat.Front.position, Target.transform.position, Vector3.Distance(_cat.Front.position, Target.transform.position), LayerMask.NameToLayer("Player")) == false)
+        {
+            _cat.StopAllCoroutines();
             NeedTransit = true;  
+        }  
     }
 }

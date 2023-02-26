@@ -606,6 +606,7 @@ GameObject:
   - component: {fileID: 1632132888}
   - component: {fileID: 1632132887}
   - component: {fileID: 1632132891}
+  - component: {fileID: 1632132892}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Player
@@ -703,6 +704,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438a178028c7fd447830559485f2cf71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1632132892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632132886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9369263b14788de4681904e9edab9d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _passedPoints:
+  - {x: 5, y: 0, z: 0}
+  - {x: 5, y: 0, z: 5}
+  - {x: 10, y: 0, z: 5}
+  - {x: 15, y: 0, z: 10}
+  - {x: 20, y: 0, z: 5}
 --- !u!1 &1795915322
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,7 +843,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974950569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.308}
+  m_LocalPosition: {x: 0, y: 0.207, z: 0.405}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1500,7 +1519,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3214430298611063833}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.7, y: -0.114, z: 2.102}
+  m_LocalPosition: {x: -3.75, y: -0.114, z: 6.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1632,8 +1651,9 @@ GameObject:
   - component: {fileID: 2868832545007945379}
   - component: {fileID: 2331345644218357246}
   - component: {fileID: 2331345644218357247}
-  - component: {fileID: 3214430298611063835}
   - component: {fileID: 3214430298611063834}
+  - component: {fileID: 3214430298611063835}
+  - component: {fileID: 3214430298611063836}
   m_Layer: 0
   m_Name: Cat_black
   m_TagString: Untagged
@@ -1663,12 +1683,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 3214430298611063833}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8a5be6a1d2efda4b8a6c08508f9cb9c, type: 3}
+  m_Script: {fileID: 11500000, guid: b8a3c31797a6a7b4ca70f8fbd30aa98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
-  _speed: 1
-  _distanceToAttack: 1
+  _speed: 2
+--- !u!114 &3214430298611063836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3214430298611063833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d4621c17464a44cb2da0ca76bd8a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _front: {fileID: 1974950570}
 --- !u!4 &3285660816750779383
 Transform:
   m_ObjectHideFlags: 0

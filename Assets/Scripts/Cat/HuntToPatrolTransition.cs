@@ -14,6 +14,9 @@ public class HuntToPatrolTransition : Transition
         }
 
         if(_expiredTime >= _timeOfStayBeforePatrol)
+        {
             NeedTransit = true;
+            _expiredTime = 0;
+        }
     }
 }
