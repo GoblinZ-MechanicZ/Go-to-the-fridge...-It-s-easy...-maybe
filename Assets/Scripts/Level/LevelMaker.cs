@@ -33,6 +33,17 @@ public class LevelMaker : MonoBehaviour
         public IntVector2 adress;
         MazeBlockState State;
         List<IntVector2> transition;
+        int mazeEntity = -1;
+
+        public int getEntity()
+        {
+            return mazeEntity;
+        }
+
+        public void setEntity(int _entity)
+        {
+            mazeEntity = _entity;
+        }
 
         public MazeBlockInfo(int _x, int _y, MazeBlockState _state)
         {
@@ -305,6 +316,7 @@ public class LevelMaker : MonoBehaviour
     [SerializeField] GameObject[] roofAttributes = null;
     [Header("Characters")]
     [SerializeField] GameObject prefCharacter = null;
+    [SerializeField] GameObject prefBonuce = null;
     [SerializeField] int maxEnemyOnLevel = 10;
     [SerializeField] GameObject[] prefEnemy = null;
     // [SerializeField] GameObject prefDoor = null;
@@ -312,6 +324,8 @@ public class LevelMaker : MonoBehaviour
     IntVector2 maxSizeMatrix;
     Maze maze;
     int EnemyOnLevel = 0;
+    List<MazeBlockInfo> mazeAllBlock = new List<MazeBlockInfo>();
+    List<MazeBlockInfo> mazeLoopBlock = new List<MazeBlockInfo>();
 
     void Start()
     {
@@ -322,6 +336,8 @@ public class LevelMaker : MonoBehaviour
 
     void mazeInstans(Maze _maze)
     {
+
+
         Vector3 shiftValue = new Vector3(blockSize.x, blockSize.y, blockSize.z);
         for (int my = 0; my < maxSizeMatrix.y; my++)
         {
@@ -354,15 +370,17 @@ public class LevelMaker : MonoBehaviour
 
                 if (MBI.getState() == MazeBlockState.Room && EnemyOnLevel < maxEnemyOnLevel)
                 {
+
                     int fillState = (int)((100 * maxSizeMatrix.y * maxSizeMatrix.x) / ((maxSizeMatrix.y - 2) * my + mx));
                     int chanceAnimals = UnityEngine.Random.Range(0, fillState);
-                    if (chanceAnimals <= (maxEnemyOnLevel - EnemyOnLevel))
-                    {
-                        GameObject pref = prefEnemy[(int)(UnityEngine.Random.Range(0, prefEnemy.Length - 1))];
-                        Instantiate(pref, pos, Quaternion.identity, mazeParent);
-                        EnemyOnLevel++;
-                    }
-                    else
+                    // if (chanceAnimals <= (maxEnemyOnLevel - EnemyOnLevel))
+                    // {
+
+                    //     GameObject pref = prefEnemy[(int)(UnityEngine.Random.Range(0, prefEnemy.Length - 1))];
+                    //     Instantiate(pref, pos, Quaternion.identity, mazeParent);
+                    //     EnemyOnLevel++;
+                    // }
+                    // else
                     {
                         int chanceAcces = UnityEngine.Random.Range(0, 5);
                         if (chanceAcces == 1 && wallAttributes != null && wallAttributes.Length > 0)
@@ -384,6 +402,23 @@ public class LevelMaker : MonoBehaviour
                 }
             }
         }
+        for (int ai = 0; ai < maxEnemyOnLevel; ai++)
+        {
+            int indexAi = (int)(UnityEngine.Random.Range(0, mazeAllBlock.Count - 1));
+            int rnd = (int)(UnityEngine.Random.Range(0, prefEnemy.Length - 1));
+            GameObject pref = prefEnemy[rnd];
+            IntVector2 adressAi = mazeAllBlock[indexAi].getAdress();
+            Vector3 posAi = new Vector3(adressAi.x * shiftValue.x, 0, adressAi.y * shiftValue.y);
+            Instantiate(pref, posAi, Quaternion.identity, mazeParent);
+            EnemyOnLevel++;
+            mazeAllBlock[indexAi].setEntity(rnd);
+
+        }
+        int indexLi = (int)(UnityEngine.Random.Range(0, mazeLoopBlock.Count - 1));
+        IntVector2 adressLi = mazeLoopBlock[indexLi].getAdress();
+        Vector3 posLi = new Vector3(adressLi.x * shiftValue.x, 0, adressLi.y * shiftValue.y);
+        Instantiate(prefBonuce, posLi, Quaternion.identity, mazeParent);
+        mazeLoopBlock[indexLi].setEntity(100);
     }
 
     GameObject choiceRoomPref(MazeBlockInfo block, out float angle)
@@ -400,6 +435,7 @@ public class LevelMaker : MonoBehaviour
                 switch (block.getTransition().Count)
                 {
                     case 1:
+                        mazeLoopBlock.Add(block);
                         //добавить выборку для старт/финиш
 
                         blockPref = prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
@@ -410,6 +446,7 @@ public class LevelMaker : MonoBehaviour
                         if (block.getTransition()[0].y < 0) { angle = 180; }
                         break;
                     case 2:
+                        mazeAllBlock.Add(block);
                         int x1 = 0; int y1 = 0;
                         foreach (var item in block.getTransition())
                         {
@@ -432,6 +469,7 @@ public class LevelMaker : MonoBehaviour
                         }
                         break;
                     case 3:
+                        mazeAllBlock.Add(block);
                         blockPref = prefRoomTries[(int)(UnityEngine.Random.Range(0, prefRoomTries.Length - 1))];
                         int x2 = 0; int y2 = 0;
                         foreach (var item in block.getTransition())
@@ -446,11 +484,13 @@ public class LevelMaker : MonoBehaviour
 
                         break;
                     case 4:
+                        mazeAllBlock.Add(block);
                         blockPref = prefRoomCross[(int)(UnityEngine.Random.Range(0, prefRoomCross.Length - 1))];
                         break;
                 }
 
                 break;
+
             case MazeBlockState.Start:
                 blockPref = prefRoomStart;
                 // /prefRoomLoop[(int)(UnityEngine.Random.Range(0, prefRoomLoop.Length - 1))];
