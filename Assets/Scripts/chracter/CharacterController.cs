@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterController : MonoBehaviour
 {
@@ -15,7 +17,9 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private LookDirection goblinLookDir = LookDirection.Forward;
     [SerializeField] private float distanceMovement = 4f;
     [SerializeField] private float movementSpeed = 5f;
+    [SerializeField] private float panicMovementSpeed = 2.5f;
     [SerializeField] private float turnSpeed = 2f;
+    [SerializeField] private float panicTurnSpeed = 1f;
     [SerializeField] private bool inMiddle = false;
     [SerializeField] private float middleThreshold = 0.5f;
     [SerializeField] private string middleTag = "Middle";
@@ -26,15 +30,37 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private GameObject smetanaJar;
     [SerializeField] private GameObject droppedJarPrefab;
     [SerializeField] private RoomBlock currentBlock;
+    [SerializeField] private GlobalSettingsScriptable globalSettings;
+    [SerializeField] private AudioSource panicSource;
+
+    public System.Action<EnemyType> OnAttacked;
+    public System.Action OnSmetanaFound;
+    public System.Action OnPanic;
+
+    public bool HasSmetana { get { return _hasSmetana; } }
     public bool IsCrouch { get { return _isCrouch; } }
     public bool IsMoving { get { return _isMoving; } }
+    public bool RoomWithEnemy { get { return currentBlock.HasEnemy; } }
+    public bool WasAttacked { get { return _wasAttacked; } }
 
     private float _turnTimer = 0f;
     private float _renewTimer = 0f;
     private float _movementTimer = 0f;
+
+    private bool canMoveForward => currentBlock.RoomDirections.forward;
+    private bool canMoveBackward => currentBlock.RoomDirections.backward;
+    private bool canMoveLeft => currentBlock.RoomDirections.left;
+    private bool canMoveRight => currentBlock.RoomDirections.right;
+
     private bool _isCrouch = false;
     private bool _isTurn = false;
     private bool _isMoving = false;
+    private bool _hasSmetana = false;
+    private bool _renewTorch = false;
+    private bool _onPanic = false;
+    private bool _wasAttacked = false;
+    private bool _hasGoldPot = false;
+
     private int _look = 0;
 
     private Vector3 startMovement, endMovement;
@@ -52,25 +78,27 @@ public class CharacterController : MonoBehaviour
         {
             _renewTimer = Mathf.Clamp(_renewTimer - Time.deltaTime, 0, torchRenewLight);
         }
-        else
+        else if (_renewTorch)
         {
+            _renewTorch = false;
             var emission = torchParticle.emission;
             emission.enabled = true;
             torchLight.enabled = true;
         }
+        if (_onPanic) return;
 
         float _h = Input.GetAxis("Horizontal");
         float _v = Input.GetAxis("Vertical");
 
-        if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire3"))
-        {
-            _isCrouch = !_isCrouch;
-            goblinAnimator.SetBool("Crouch", _isCrouch);
-            goblinAnimator.ResetTrigger("Attack");
-            goblinAnimator.ResetTrigger("HevyAttack");
-            goblinAnimator.ResetTrigger("TurnRight");
-            goblinAnimator.ResetTrigger("TurnLeft");
-        }
+        // if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire3"))
+        // {
+        //     _isCrouch = !_isCrouch;
+        //     goblinAnimator.SetBool("Crouch", _isCrouch);
+        //     goblinAnimator.ResetTrigger("Attack");
+        //     goblinAnimator.ResetTrigger("HevyAttack");
+        //     goblinAnimator.ResetTrigger("TurnRight");
+        //     goblinAnimator.ResetTrigger("TurnLeft");
+        // }
 
         if (_isCrouch)
         {
@@ -86,20 +114,21 @@ public class CharacterController : MonoBehaviour
         {
             goblinAnimator.SetTrigger("RenewTorch");
             _renewTimer = torchRenewLight;
+            _renewTorch = true;
             var emission = torchParticle.emission;
             emission.enabled = false;
             torchLight.enabled = false;
         }
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            goblinAnimator.SetTrigger("Attack");
-        }
+        // if (Input.GetButtonDown("Fire1"))
+        // {
+        //     goblinAnimator.SetTrigger("Attack");
+        // }
 
-        if (Input.GetButtonDown("Fire2"))
-        {
-            goblinAnimator.SetTrigger("HevyAttack");
-        }
+        // if (Input.GetButtonDown("Fire2"))
+        // {
+        //     goblinAnimator.SetTrigger("HevyAttack");
+        // }
 
         HandleTurn(_h);
         if (HandleMovement(_v))
@@ -108,9 +137,9 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void OnJarFound()
+    public void TakeDamage(EnemyType enemyType)
     {
-        smetanaJar.SetActive(true);
+        OnAttacked?.Invoke(enemyType);
     }
 
     //return true if can't move
@@ -131,6 +160,28 @@ public class CharacterController : MonoBehaviour
                 _isMoving = false;
                 goblinAnimator.SetBool("Forward", false);
                 goblinAnimator.SetBool("Backward", false);
+
+                if (currentBlock.HasBonus)
+                {
+                    Debug.Log("Room with bonus");
+                }
+                else if (currentBlock.IsFinish)
+                {
+                    OnSmetanaFound?.Invoke();
+                    _hasSmetana = true;
+                    smetanaJar.SetActive(true);
+                }
+                else if (_hasSmetana && currentBlock.IsStart)
+                {
+                    if (_hasGoldPot)
+                    {
+                        Debug.Log("GameOver You WIN! YAAAAY!!!");
+                    }
+                    else
+                    {
+                        Debug.Log("GameOver You LOSE! YAAAAY!!!");
+                    }
+                }
             }
             return false;
         }
@@ -148,7 +199,7 @@ public class CharacterController : MonoBehaviour
                 goblinAnimator.SetBool("Forward", true);
                 goblinAnimator.SetBool("Backward", false);
                 _isMoving = true;
-                endMovement = transform.localPosition + GetDirection() * distanceMovement;
+                endMovement = transform.localPosition + GetDirection(goblinLookDir) * distanceMovement;
             }
         }
         else
@@ -162,7 +213,7 @@ public class CharacterController : MonoBehaviour
                 goblinAnimator.SetBool("Forward", false);
                 goblinAnimator.SetBool("Backward", true);
                 _isMoving = true;
-                endMovement = transform.localPosition - GetDirection() * distanceMovement;
+                endMovement = transform.localPosition - GetDirection(goblinLookDir) * distanceMovement;
             }
         }
 
@@ -177,11 +228,11 @@ public class CharacterController : MonoBehaviour
         if (_turnTimer > 0f)
         {
             _turnTimer = Mathf.Clamp(_turnTimer - Time.deltaTime, 0, turnSpeed);
-            goblinAnimator.transform.rotation = Quaternion.Lerp(startRotate, endRotate, (turnSpeed - _turnTimer) / turnSpeed);
+            transform.rotation = Quaternion.Lerp(startRotate, endRotate, (turnSpeed - _turnTimer) / turnSpeed);
         }
         else if (_isTurn)
         {
-            var gobEuler = goblinAnimator.transform.localEulerAngles;
+            var gobEuler = transform.localEulerAngles;
             _isTurn = false;
         }
 
@@ -212,7 +263,7 @@ public class CharacterController : MonoBehaviour
             goblinAnimator.ResetTrigger("HevyAttack");
             _turnTimer = turnSpeed;
             startRotate = goblinAnimator.transform.rotation;
-            endRotate = Quaternion.Euler(0f, GetDirectionAngle(), 0f);
+            endRotate = Quaternion.Euler(0f, GetDirectionAngle(goblinLookDir), 0f);
         }
     }
 
@@ -255,13 +306,13 @@ public class CharacterController : MonoBehaviour
         switch (goblinLookDir)
         {
             case (LookDirection.Forward):
-                return currentBlock.RoomDirections.forward;
+                return canMoveForward;
             case (LookDirection.Right):
-                return currentBlock.RoomDirections.right;
+                return canMoveRight;
             case (LookDirection.Backward):
-                return currentBlock.RoomDirections.backward;
+                return canMoveBackward;
             case (LookDirection.Left):
-                return currentBlock.RoomDirections.left;
+                return canMoveLeft;
         }
         return false;
     }
@@ -271,20 +322,20 @@ public class CharacterController : MonoBehaviour
         switch ((LookDirection)temp)
         {
             case (LookDirection.Forward):
-                return currentBlock.RoomDirections.forward;
+                return canMoveForward;
             case (LookDirection.Right):
-                return currentBlock.RoomDirections.right;
+                return canMoveRight;
             case (LookDirection.Backward):
-                return currentBlock.RoomDirections.backward;
+                return canMoveBackward;
             case (LookDirection.Left):
-                return currentBlock.RoomDirections.left;
+                return canMoveLeft;
         }
         return false;
     }
 
-    private Vector3 GetDirection()
+    private Vector3 GetDirection(LookDirection direction)
     {
-        switch (goblinLookDir)
+        switch (direction)
         {
             case (LookDirection.Forward):
                 return Vector3.forward;
@@ -297,10 +348,93 @@ public class CharacterController : MonoBehaviour
         }
         return Vector3.forward;
     }
-    
-    private float GetDirectionAngle()
+
+    private void OnTriggerExit(Collider collider)
     {
-        switch (goblinLookDir)
+        if (collider.tag != middleTag)
+        {
+            return;
+        }
+
+        inMiddle = false;
+    }
+
+    public IEnumerator DoPanic()
+    {
+        _onPanic = true;
+        var emission = torchParticle.emission;
+        _renewTorch = false;
+        emission.enabled = false;
+        torchLight.enabled = false;
+        panicSource.Play();
+
+        goblinAnimator.ResetTrigger("TurnLeft");
+        goblinAnimator.ResetTrigger("TurnRight");
+        goblinAnimator.ResetTrigger("RenewTorch");
+
+        OnPanic?.Invoke();
+
+        yield return PanicMovement();
+    }
+
+
+    public IEnumerator DoChill()
+    {
+        _onPanic = false;
+        goblinAnimator.SetTrigger("RenewTorch");
+        _renewTimer = torchRenewLight;
+        _renewTorch = true;
+        yield return new WaitForEndOfFrame();
+    }
+
+    public IEnumerator PanicMovement()
+    {
+        float moveCount = 0f;
+
+        while (moveCount < globalSettings.panicMoves)
+        {
+            moveCount++;
+
+            if (canMoveRight)
+            {
+                if (goblinLookDir != LookDirection.Right)
+                {
+                    yield return Turn(LookDirection.Right, panicTurnSpeed);
+                }
+                yield return Move(LookDirection.Right, panicMovementSpeed);
+            }
+            else if (canMoveForward)
+            {
+                if (goblinLookDir != LookDirection.Forward)
+                {
+                    yield return Turn(LookDirection.Forward, panicTurnSpeed);
+                }
+                yield return Move(LookDirection.Forward, panicMovementSpeed);
+            }
+            else if (canMoveBackward)
+            {
+                if (goblinLookDir != LookDirection.Backward)
+                {
+                    yield return Turn(LookDirection.Backward, panicTurnSpeed);
+                }
+                yield return Move(LookDirection.Backward, panicMovementSpeed);
+            }
+            else if (canMoveLeft)
+            {
+                if (goblinLookDir != LookDirection.Left)
+                {
+                    yield return Turn(LookDirection.Left, panicTurnSpeed);
+                }
+                yield return Move(LookDirection.Left, panicMovementSpeed);
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private float GetDirectionAngle(LookDirection direction)
+    {
+        switch (direction)
         {
             case (LookDirection.Forward):
                 return 0;
@@ -314,13 +448,41 @@ public class CharacterController : MonoBehaviour
         return 0;
     }
 
-    private void OnTriggerExit(Collider collider)
+    private IEnumerator Turn(LookDirection direction, float speed)
     {
-        if (collider.tag != middleTag)
+        float timer = 0f;
+
+        goblinLookDir = direction;
+
+        startRotate = transform.rotation;
+        endRotate = Quaternion.Euler(0f, GetDirectionAngle(direction), 0f);
+
+        //currently without animation;
+        while (timer <= speed)
         {
-            return;
+            timer += Time.deltaTime;
+            transform.rotation = Quaternion.Lerp(startRotate, endRotate, timer / speed);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private IEnumerator Move(LookDirection direction, float speed)
+    {
+        float timer = 0f;
+        startMovement = transform.position;
+        endMovement = transform.position + GetDirection(direction) * distanceMovement;
+
+        goblinAnimator.SetBool("Forward", true);
+        goblinAnimator.SetBool("Backward", false);
+
+        while (timer <= speed)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector3.Lerp(startMovement, endMovement, timer / speed);
+            yield return new WaitForEndOfFrame();
         }
 
-        inMiddle = false;
+        goblinAnimator.SetBool("Forward", false);
+        goblinAnimator.SetBool("Backward", false);
     }
 }

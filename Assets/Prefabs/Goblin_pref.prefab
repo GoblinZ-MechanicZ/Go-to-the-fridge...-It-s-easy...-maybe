@@ -5276,6 +5276,7 @@ GameObject:
   - component: {fileID: 7431665479197204787}
   - component: {fileID: 7431665479197204786}
   - component: {fileID: 8500543552912447180}
+  - component: {fileID: 3309026190658953426}
   m_Layer: 0
   m_Name: Goblin_pref
   m_TagString: Untagged
@@ -5346,7 +5347,9 @@ MonoBehaviour:
   goblinLookDir: 0
   distanceMovement: 4
   movementSpeed: 5
-  turnSpeed: 1.5
+  panicMovementSpeed: 1
+  turnSpeed: 1
+  panicTurnSpeed: 0.25
   inMiddle: 0
   middleThreshold: 0.7
   middleTag: Middle
@@ -5357,6 +5360,104 @@ MonoBehaviour:
   smetanaJar: {fileID: 6256233697219059700}
   droppedJarPrefab: {fileID: 919132149155446097, guid: e1d7bbf8a48ed3b42ac4c7bab47ff145, type: 3}
   currentBlock: {fileID: 0}
+  globalSettings: {fileID: 11400000, guid: f615dabd13421964e8cb77d960ab9b6a, type: 2}
+  panicSource: {fileID: 3309026190658953426}
+--- !u!82 &3309026190658953426
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7431665479197204781}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: dc6e814fced6d1247a68c97ad4e33be0, type: 2}
+  m_audioClip: {fileID: 8300000, guid: e1f71de167c62114799476a05a9dd5d5, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7699444560710039569
 GameObject:
   m_ObjectHideFlags: 0
@@ -5636,7 +5737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac7661113b201b14bac4d3ff0436f74b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac7661113b201b14bac4d3ff0436f74b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5753,7 +5854,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: cd47ba8b439c7ef42a0649eb9da35eef, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

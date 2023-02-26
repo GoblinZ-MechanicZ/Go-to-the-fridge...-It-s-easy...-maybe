@@ -305,6 +305,7 @@ public class LevelMaker : MonoBehaviour
     [SerializeField] GameObject[] roofAttributes = null;
     [Header("Characters")]
     [SerializeField] GameObject prefCharacter = null;
+    [SerializeField] private CharacterStressSystem stressSystem;
     [SerializeField] int maxEnemyOnLevel = 10;
     [SerializeField] GameObject[] prefEnemy = null;
     // [SerializeField] GameObject prefDoor = null;
@@ -350,6 +351,7 @@ public class LevelMaker : MonoBehaviour
                     character.transform.eulerAngles = new Vector3(0, angle, 0);
                     character.name = "Goblin_Character";
                     cameraFollow.SetTarget(character.transform.GetChild(0).gameObject);
+                    stressSystem.SetCharacter(character.GetComponent<CharacterController>());
                 }
 
                 if (MBI.getState() == MazeBlockState.Room && EnemyOnLevel < maxEnemyOnLevel)
