@@ -382,7 +382,7 @@ public class LevelMaker : MonoBehaviour
                     // }
                     // else
                     {
-                        int chanceAcces = UnityEngine.Random.Range(0, 5);
+                        int chanceAcces = UnityEngine.Random.Range(0, 3);
                         if (chanceAcces == 1 && wallAttributes != null && wallAttributes.Length > 0)
                         {
                             GameObject wallGO = Instantiate(wallAttributes[(int)(UnityEngine.Random.Range(0, wallAttributes.Length - 1))], pos, Quaternion.identity, mazeParent);
