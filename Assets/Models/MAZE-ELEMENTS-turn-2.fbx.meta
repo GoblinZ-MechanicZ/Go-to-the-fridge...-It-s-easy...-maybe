@@ -20,10 +20,10 @@ ModelImporter:
       name: wall
     second: {fileID: -1418106222229866039, guid: 92bff246ca0faf6468bac6f612d2aa7f, type: 3}
   materials:
-    materialImportMode: 2
-    materialName: 0
+    materialImportMode: 1
+    materialName: 1
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
