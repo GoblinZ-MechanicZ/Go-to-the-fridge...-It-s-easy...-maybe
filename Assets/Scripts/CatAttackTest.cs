@@ -24,7 +24,7 @@ public class CatAttackTest : MonoBehaviour
         {
             show = true;
             player.enabled = true;
-            StopCoroutine(showAttack);
+            if (showAttack != null) { StopCoroutine(showAttack); }
             showAttack = ShowCatAttack();
             StartCoroutine(showAttack);
         }
