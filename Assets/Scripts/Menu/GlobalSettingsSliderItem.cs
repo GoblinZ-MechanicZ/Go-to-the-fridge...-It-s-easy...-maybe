@@ -20,12 +20,21 @@ public class GlobalSettingsSliderItem : MonoBehaviour
                         0.5f;
     }
 
+    public void Reset()
+    {
+        slider.value =
+                (isBrightness) ? globalSettings.brightness :
+                    (isSound) ? globalSettings.masterVolume :
+                        0.5f;
+    }
+
     public void OnChangeBrightness(float newValue)
     {
         globalSettings.brightness = newValue;
     }
 
-    public void OnChangeSound(float newValue) {
+    public void OnChangeSound(float newValue)
+    {
         masterGroup.audioMixer.SetFloat("MasterVolume", newValue);
         globalSettings.masterVolume = newValue;
     }
