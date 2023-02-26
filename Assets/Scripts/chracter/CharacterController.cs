@@ -36,6 +36,8 @@ public class CharacterController : MonoBehaviour
     public System.Action<EnemyType> OnAttacked;
     public System.Action OnSmetanaFound;
     public System.Action OnPanic;
+    public System.Action OnLose;
+    public System.Action<bool> OnEndGame; //true has gold; false without gold
 
     public bool HasSmetana { get { return _hasSmetana; } }
     public bool IsCrouch { get { return _isCrouch; } }
@@ -173,14 +175,7 @@ public class CharacterController : MonoBehaviour
                 }
                 else if (_hasSmetana && currentBlock.IsStart)
                 {
-                    if (_hasGoldPot)
-                    {
-                        Debug.Log("GameOver You WIN! YAAAAY!!!");
-                    }
-                    else
-                    {
-                        Debug.Log("GameOver You LOSE! YAAAAY!!!");
-                    }
+                    OnEndGame(_hasGoldPot);
                 }
             }
             return false;

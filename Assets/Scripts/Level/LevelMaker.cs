@@ -281,6 +281,7 @@ public class LevelMaker : MonoBehaviour
 
     [SerializeField] private Transform mazeParent;
     [SerializeField] private CameraFollow cameraFollow;
+    [SerializeField] private VideoPlayerOverlay video1, video2;
 
     [Header("Maze size")]
     [SerializeField] int maxSizeX = 10;
@@ -351,7 +352,10 @@ public class LevelMaker : MonoBehaviour
                     character.transform.eulerAngles = new Vector3(0, angle, 0);
                     character.name = "Goblin_Character";
                     cameraFollow.SetTarget(character.transform.GetChild(0).gameObject);
-                    stressSystem.SetCharacter(character.GetComponent<CharacterController>());
+                    var characterScript = character.GetComponent<CharacterController>();
+                    stressSystem.SetCharacter(characterScript);
+                    video1.SetCharacter(characterScript);
+                    video2.SetCharacter(characterScript);
                 }
 
                 if (MBI.getState() == MazeBlockState.Room && EnemyOnLevel < maxEnemyOnLevel)
