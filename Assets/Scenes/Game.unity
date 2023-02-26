@@ -251,9 +251,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeParent: {fileID: 252159138}
   cameraFollow: {fileID: 1642046243}
-  maxSizeX: 25
-  maxSizeY: 25
-  mazeFillValue: 0.374
+  maxSizeX: 12
+  maxSizeY: 12
+  mazeFillValue: 0.907
   blockSize: {x: 4, y: 4, z: 3}
   prefBorder: {fileID: 692177334793723557, guid: 45c7c4edf24f6a14f9a6977da6616df5, type: 3}
   prefRoomLoop:
@@ -262,13 +262,20 @@ MonoBehaviour:
   - {fileID: 5509109167887017265, guid: 973807c688523e04f8a0c77cb1fbabfc, type: 3}
   prefRoomTunel:
   - {fileID: 8984957081646535122, guid: be1c96bdeb4591943a2092fb522d4c1a, type: 3}
+  - {fileID: 2578915385577800164, guid: e2d5621db3dc73f4b9758e73860c6318, type: 3}
+  - {fileID: 8984957081646535122, guid: be1c96bdeb4591943a2092fb522d4c1a, type: 3}
   prefRoomTurn:
+  - {fileID: 4183768349921037075, guid: ef0cc6657af43244ca0d3efe40198323, type: 3}
+  - {fileID: 182901351485259606, guid: 27c82f3c4c2e9d64783b26bfc3ac9b99, type: 3}
   - {fileID: 4183768349921037075, guid: ef0cc6657af43244ca0d3efe40198323, type: 3}
   prefRoomTries:
   - {fileID: 6878349509668250409, guid: d861996534f3df744ba539dacdac3679, type: 3}
+  - {fileID: 1557997260078205859, guid: a41351680adc4a94e9b44414cd13843b, type: 3}
+  - {fileID: 6878349509668250409, guid: d861996534f3df744ba539dacdac3679, type: 3}
   prefRoomCross:
   - {fileID: 5980192465745195185, guid: aa17256aefc0d0848a73f97cc9a304ea, type: 3}
-  - {fileID: 4527813511820855546, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
+  - {fileID: 4677819976786137939, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
+  - {fileID: 5980192465745195185, guid: aa17256aefc0d0848a73f97cc9a304ea, type: 3}
   prefRoomStart: {fileID: 8656170820676033498, guid: 8fabad9b563e2ed40a7bc20444e08605, type: 3}
   prefRoomFinish: {fileID: 788993021232169032, guid: a60c9f2e25ec78d4a910ede0767696c4, type: 3}
   wallAttributes:
@@ -280,7 +287,7 @@ MonoBehaviour:
   roofAttributes:
   - {fileID: 1037427323292367811, guid: 3920b73a069967546891453b2d670794, type: 3}
   prefCharacter: {fileID: 7431665479197204781, guid: aa36d42afd025f84ab740c7e152684a9, type: 3}
-  maxEnemyOnLevel: 50
+  maxEnemyOnLevel: 10
   prefEnemy:
   - {fileID: 701615656903119284, guid: dcdeea5f0563f9847a2cff192268b13f, type: 3}
   - {fileID: 3420035634522699076, guid: da2d6474df09cd744bb7f261dc6ce962, type: 3}
@@ -751,7 +758,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1104017449
 Light:
@@ -893,7 +900,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642046239}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 23, y: 1.5, z: 0}
+  m_LocalPosition: {x: 2.14, y: 1.5, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -917,64 +924,3 @@ MonoBehaviour:
   followDistance: 3
   turnSpeed: 3
   smoothTime: 0.25
---- !u!1001 &8936884190117636386
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863480222049079872, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527813511820855546, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_Name
-      value: MAZE-ELEMENTS-cross-2-arm
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527813511820855546, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 45ab7edcb9ff0cf4e85927fc47eefaf4, type: 3}
