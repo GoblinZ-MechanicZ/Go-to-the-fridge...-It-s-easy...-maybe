@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CatMovement : MonoBehaviour
 {
-    [SerializeField] private float _speed;
+    [SerializeField] private Transform _front;
     private bool _startRotation = false;
     private bool _startMovement = false;
+
+    public Transform Front => _front;
 
     public bool StartMovement => _startMovement;
     public bool StartRotation => _startRotation;
@@ -20,13 +22,13 @@ public class CatMovement : MonoBehaviour
         _startRotation = false;
     }
 
-    public IEnumerator Move(Vector3 point)
+    public IEnumerator Move(Vector3 point, float speed)
     {
         _startMovement = true;
 
         while(transform.position != point)
         {
-            transform.position = Vector3.MoveTowards(transform.position, point, _speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, point, speed * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
 

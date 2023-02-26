@@ -195,11 +195,6 @@ MonoBehaviour:
   maxEnemyOnLevel: 50
   prefEnemy:
   - {fileID: 701615656903119284, guid: dcdeea5f0563f9847a2cff192268b13f, type: 3}
-  - {fileID: 3420035634522699076, guid: da2d6474df09cd744bb7f261dc6ce962, type: 3}
-  - {fileID: 5239640324010119858, guid: f0763c01dec28de4f90a5e8583b977b0, type: 3}
-  - {fileID: 7210766868579338689, guid: bb8eb68d9164f2144acc5092370e1afa, type: 3}
-  - {fileID: 237738650880136534, guid: 9393e4ab594865d4098e61e782cdfe1b, type: 3}
-  - {fileID: 8470373562551196760, guid: 90194e9793378a948b26eecaaada11b8, type: 3}
 --- !u!1 &555409200
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FearState : State
 {
+    [SerializeField] private float _speed;
     [SerializeField] private int _passedPointsCount;
     public int PassedPointsCount => _passedPointsCount;
     public List<Vector3> PassedPoints {get; set;} = new();
@@ -21,7 +22,7 @@ public class FearState : State
     {
         if(_cat.StartMovement == false)
         {
-            StartCoroutine(_cat.Move(PassedPoints[_numberOfCurrentPoint]));
+            StartCoroutine(_cat.Move(PassedPoints[_numberOfCurrentPoint], _speed));
             var direction = PassedPoints[_numberOfCurrentPoint] - transform.position;
             _cat.Rotate(direction);
         }

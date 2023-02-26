@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnAttackPlayerTransition : Transition
+public class EatState : State
 {
-    private void Update()
+    private void Update() 
     {
         
     }
+
 }

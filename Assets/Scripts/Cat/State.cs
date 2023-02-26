@@ -5,9 +5,9 @@ using UnityEngine;
 public abstract class State : MonoBehaviour
 {
     [SerializeField] private List<Transition> _transitions = new();
-    protected Player Target {get; set;}
+    protected CharacterController Target {get; set;}
 
-    public void Enter(Player target)
+    public void Enter(CharacterController target)
     {
         if(enabled == false)
         {
@@ -17,6 +17,7 @@ public abstract class State : MonoBehaviour
             foreach(var transition in _transitions)
             {
                 transition.enabled = true;
+                transition.Initialize(target);
             }
         }
     }

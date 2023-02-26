@@ -6,12 +6,12 @@ public class StateMachine : MonoBehaviour
 {
     [SerializeField] private State _startState;
     private State _currentState;
-    private Player _target;
+    private CharacterController _target;
 
     public State Current => _currentState;
     private void Start()
     {
-        _target = GameObject.FindWithTag("Player").GetComponent<Player>();
+        _target = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
         Reset(_startState);
     }
 

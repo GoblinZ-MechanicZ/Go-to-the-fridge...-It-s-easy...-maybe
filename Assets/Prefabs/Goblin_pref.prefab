@@ -5261,6 +5261,7 @@ GameObject:
   - component: {fileID: 7431665479197204786}
   - component: {fileID: 8595427157277973059}
   - component: {fileID: 6544846592904908031}
+  - component: {fileID: 5884265796398996371}
   m_Layer: 0
   m_Name: Goblin_pref
   m_TagString: Player
@@ -5347,6 +5348,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438a178028c7fd447830559485f2cf71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5884265796398996371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7431665479197204781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9369263b14788de4681904e9edab9d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _passedPoints: []
 --- !u!1 &7503971247547457031
 GameObject:
   m_ObjectHideFlags: 0
