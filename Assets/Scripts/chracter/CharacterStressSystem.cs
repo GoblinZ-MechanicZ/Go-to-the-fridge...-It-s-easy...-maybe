@@ -26,6 +26,7 @@ public class CharacterStressSystem : MonoBehaviour
         character = characterController;
         character.OnSmetanaFound += OnSmetanaFound;
         character.OnAfterAttacked += OnAfterAttacked;
+        character.OnBonusFound += OnBonusFound;
         character.OnPanic += OnPanic;
 
         StartCoroutine(DoUpdate());
@@ -37,6 +38,11 @@ public class CharacterStressSystem : MonoBehaviour
     }
 
     private void OnSmetanaFound()
+    {
+        _stressLevel = 0f;
+    }
+
+    private void OnBonusFound()
     {
         _stressLevel = 0f;
     }
