@@ -122,13 +122,13 @@ public class CharacterStressSystem : MonoBehaviour
 
             if (!themeChanged && _stressPercent >= .5f)
             {
-                themeLess50.volume = Mathf.Lerp(0.3f, 0f, timer / 1f);
-                themeGreat50.volume = Mathf.Lerp(0f, 0.3f, timer / 1f);
+                themeLess50.volume = Mathf.Lerp(0.15f, 0f, timer / 1f);
+                themeGreat50.volume = Mathf.Lerp(0f, 0.15f, timer / 1f);
             }
             else if (themeChanged && _stressPercent < .5f)
             {
-                themeLess50.volume = Mathf.Lerp(0f, 0.3f, timer / 1f);
-                themeGreat50.volume = Mathf.Lerp(0.3f, 0f, timer / 1f);
+                themeLess50.volume = Mathf.Lerp(0f, 0.15f, timer / 1f);
+                themeGreat50.volume = Mathf.Lerp(0.15f, 0f, timer / 1f);
             }
 
             yield return new WaitForEndOfFrame();
