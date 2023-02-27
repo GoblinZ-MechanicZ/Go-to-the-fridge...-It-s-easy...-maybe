@@ -30,11 +30,30 @@ public class VideoPlayerOverlay : MonoBehaviour
     public void SetCharacter(CharacterController characterController)
     {
         character = characterController;
-        if (isGrabSmetana) character.OnSmetanaFound += ShowVideo;
-        if (isCatAttack) character.OnAttacked += ShowVideo;
-        if (isBonus) character.OnBonusFound += ShowVideo;
-        if (isWin) character.OnEndGame += ShowVideo;
-        if (isLose) character.OnLose += ShowVideo;
+        if (isGrabSmetana)
+        {
+            character.OnSmetanaFound += ShowVideo;
+            player.url = System.IO.Path.Combine(Application.streamingAssetsPath, "Taking Smetana.mp4");
+        }
+        if (isCatAttack)
+        {
+            character.OnAttacked += ShowVideo;
+            player.url = System.IO.Path.Combine(Application.streamingAssetsPath, "CatAttack.mp4");
+        }
+        if (isBonus)
+        {
+            character.OnBonusFound += ShowVideo;
+            player.url = System.IO.Path.Combine(Application.streamingAssetsPath, "TakingBonus.mp4");
+        }
+        if (isWin)
+        {
+            character.OnEndGame += ShowVideo;
+        }
+        if (isLose)
+        {
+            character.OnLose += ShowVideo;
+            player.url = System.IO.Path.Combine(Application.streamingAssetsPath, "BadEnd.mp4");
+        }
     }
 
     public void ShowVideo()
@@ -51,10 +70,12 @@ public class VideoPlayerOverlay : MonoBehaviour
     {
         if (isWin && !hasGold)
         {
+            player.url = System.IO.Path.Combine(Application.streamingAssetsPath, "victory 1.mp4");
             ShowVideo();
         }
         else if (isWinBonus && hasGold)
         {
+            player.url = System.IO.Path.Combine(Application.streamingAssetsPath, "WinwithBonuce.mp4");
             ShowVideo();
         }
     }
