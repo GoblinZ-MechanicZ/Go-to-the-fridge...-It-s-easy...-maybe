@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 70566892}
   - component: {fileID: 70566891}
   - component: {fileID: 70566893}
+  - component: {fileID: 70566894}
   m_Layer: 0
   m_Name: CatAttack
   m_TagString: Untagged
@@ -159,12 +160,12 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
-  m_Url: 
+  m_Url: https://goblinz.site/jamGame/cat.mp4
   m_EnabledAudioTracks: 
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
@@ -203,14 +204,111 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 70566891}
   catAttackUI: {fileID: 382047791}
-  catAttackRT: {fileID: 8400000, guid: 3069f363beabffa41b345d57b79987a7, type: 2}
-  showDelay: 0.3
+  audioSource: {fileID: 70566894}
+  showDelay: 0.5
   isCatAttack: 1
   isGrabSmetana: 0
   isBonus: 0
   isWin: 0
   isWinBonus: 0
   isLose: 0
+  hasAudio: 1
+--- !u!82 &70566894
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70566890}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: dc6e814fced6d1247a68c97ad4e33be0, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 57f0994399e3ffb4b940d574a6789cc8, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.774
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &199741237
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +356,134 @@ AudioSource:
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &221744868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 221744869}
+  - component: {fileID: 221744870}
+  m_Layer: 0
+  m_Name: ChillSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &221744869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221744868}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1642046242}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &221744870
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221744868}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: dc6e814fced6d1247a68c97ad4e33be0, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 305a66d28bee3a244a1f1d4282fdb4f3, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -986,14 +1212,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 605512485}
   catAttackUI: {fileID: 713175933}
-  catAttackRT: {fileID: 8400000, guid: 0b05f33c411880b4186d839519432d16, type: 2}
-  showDelay: 0.3
+  audioSource: {fileID: 0}
+  showDelay: 0.5
   isCatAttack: 0
   isGrabSmetana: 1
   isBonus: 0
   isWin: 0
   isWinBonus: 0
   isLose: 0
+  hasAudio: 0
 --- !u!328 &605512485
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -1012,12 +1239,12 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
-  m_Url: 
+  m_Url: https://goblinz.site/jamGame/tak0.mp4
   m_EnabledAudioTracks: 
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
@@ -1426,14 +1653,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 754213110}
   catAttackUI: {fileID: 662313163}
-  catAttackRT: {fileID: 8400000, guid: 8a78d0fe031009747b2156c3a8185635, type: 2}
-  showDelay: 0.3
+  audioSource: {fileID: 0}
+  showDelay: 0.5
   isCatAttack: 0
   isGrabSmetana: 0
   isBonus: 0
   isWin: 1
   isWinBonus: 0
   isLose: 0
+  hasAudio: 0
 --- !u!328 &754213110
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -1452,12 +1680,12 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
-  m_Url: 
+  m_Url: https://goblinz.site/jamGame/end0.mp4
   m_EnabledAudioTracks: 
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
@@ -1514,14 +1742,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 937038942}
   catAttackUI: {fileID: 1894897987}
-  catAttackRT: {fileID: 8400000, guid: 220e6b3f7f7b66549a1e77abd34f55b3, type: 2}
-  showDelay: 0.3
+  audioSource: {fileID: 0}
+  showDelay: 0.5
   isCatAttack: 0
   isGrabSmetana: 0
   isBonus: 1
   isWin: 0
   isWinBonus: 0
   isLose: 0
+  hasAudio: 0
 --- !u!328 &937038942
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -1540,12 +1769,12 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
-  m_Url: 
+  m_Url: https://goblinz.site/jamGame/Tak1.mp4
   m_EnabledAudioTracks: 
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
@@ -1604,6 +1833,7 @@ MonoBehaviour:
   heartSource: {fileID: 1642046244}
   themeLess50: {fileID: 1485583313}
   themeGreat50: {fileID: 1516503489}
+  chillSource: {fileID: 221744870}
   stressVignette: {fileID: 1094860863}
   panicImage: {fileID: 528162012}
 --- !u!4 &1064337413
@@ -1729,14 +1959,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1309188539}
   catAttackUI: {fileID: 1810070845}
-  catAttackRT: {fileID: 8400000, guid: b954743e9993f3845b13c4f89e7c03af, type: 2}
-  showDelay: 0.3
+  audioSource: {fileID: 0}
+  showDelay: 0.5
   isCatAttack: 0
   isGrabSmetana: 0
   isBonus: 1
   isWin: 0
   isWinBonus: 0
   isLose: 0
+  hasAudio: 0
 --- !u!328 &1309188539
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -1755,12 +1986,12 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
-  m_Url: 
+  m_Url: https://goblinz.site/jamGame/end2.mp4
   m_EnabledAudioTracks: 
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
@@ -2146,14 +2377,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1544485572}
   catAttackUI: {fileID: 1400248029}
-  catAttackRT: {fileID: 8400000, guid: 421520f65d9576f46b29e27e19b6277a, type: 2}
-  showDelay: 0.3
+  audioSource: {fileID: 0}
+  showDelay: 0.5
   isCatAttack: 0
   isGrabSmetana: 0
   isBonus: 0
   isWin: 0
   isWinBonus: 1
   isLose: 0
+  hasAudio: 0
 --- !u!328 &1544485572
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -2172,12 +2404,12 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
-  m_Url: 
+  m_Url: https://goblinz.site/jamGame/end1.mp4
   m_EnabledAudioTracks: 
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
@@ -2290,6 +2522,7 @@ Transform:
   - {fileID: 1909048873}
   - {fileID: 199741238}
   - {fileID: 1913640045}
+  - {fileID: 221744869}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}

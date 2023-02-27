@@ -12,6 +12,7 @@ public class CharacterStressSystem : MonoBehaviour
     [SerializeField] private AudioSource heartSource;
     [SerializeField] private AudioSource themeLess50;
     [SerializeField] private AudioSource themeGreat50;
+    [SerializeField] private AudioSource chillSource;
     [SerializeField] private Image stressVignette;
     [SerializeField] private Image panicImage;
 
@@ -98,15 +99,17 @@ public class CharacterStressSystem : MonoBehaviour
     private IEnumerator DoChill()
     {
         float timer = 0f;
-
+        chillSource.volume = 0.3f;
         while (timer < globalSettings.stressChillTime)
         {
             timer += Time.deltaTime;
             _stressLevel -= Time.deltaTime * (globalSettings.stressAfterPanic / globalSettings.stressChillTime);
+
             panicImage.color = Color.Lerp(new Color(0f, 0f, 0f, 1f), new Color(0f, 0f, 0f, 0f), timer / globalSettings.stressChillTime);
             UpdateAudioImage();
             yield return new WaitForEndOfFrame();
         }
+        chillSource.volume = 0f;
     }
 
     private IEnumerator ChangeTheme()

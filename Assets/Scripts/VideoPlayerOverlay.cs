@@ -7,7 +7,7 @@ public class VideoPlayerOverlay : MonoBehaviour
 {
     [SerializeField] private VideoPlayer player;
     [SerializeField] private GameObject catAttackUI;
-    [SerializeField] private RenderTexture catAttackRT;
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private float showDelay = 0.2f;
     [SerializeField] private bool isCatAttack = false;
     [SerializeField] private bool isGrabSmetana = false;
@@ -15,6 +15,7 @@ public class VideoPlayerOverlay : MonoBehaviour
     [SerializeField] private bool isWin = false;
     [SerializeField] private bool isWinBonus = false;
     [SerializeField] private bool isLose = false;
+    [SerializeField] private bool hasAudio = false;
 
     private CharacterController character;
 
@@ -40,15 +41,20 @@ public class VideoPlayerOverlay : MonoBehaviour
     {
         show = true;
         player.enabled = true;
+        if (hasAudio) { audioSource.Play(); }
         if (showVideo != null) { StopCoroutine(showVideo); }
         showVideo = ShowVideoEnum();
         StartCoroutine(showVideo);
     }
 
-    public void ShowVideo(bool hasGold) {
-        if(isWin && !hasGold) {
+    public void ShowVideo(bool hasGold)
+    {
+        if (isWin && !hasGold)
+        {
             ShowVideo();
-        } else if(isWinBonus && hasGold) {
+        }
+        else if (isWinBonus && hasGold)
+        {
             ShowVideo();
         }
     }

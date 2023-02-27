@@ -80,14 +80,27 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
-        // if(Input.GetKeyDown(KeyCode.I)) {
+        // if (Input.GetKeyDown(KeyCode.I))
+        // {
         //     OnLose?.Invoke();
         // }
-        // if(Input.GetKeyDown(KeyCode.O)) {
+        // if (Input.GetKeyDown(KeyCode.O))
+        // {
         //     OnEndGame?.Invoke(false);
         // }
-        // if(Input.GetKeyDown(KeyCode.P)) {
+        // if (Input.GetKeyDown(KeyCode.P))
+        // {
         //     OnEndGame?.Invoke(true);
+        // }
+        // if (Input.GetKeyDown(KeyCode.U))
+        // {
+        //     OnAttacked?.Invoke(EnemyType.Cat);
+        // }
+        // if (Input.GetKeyDown(KeyCode.Y))
+        // {
+        //     OnSmetanaFound?.Invoke();
+        //     _hasSmetana = true;
+        //     smetanaJar.SetActive(true);
         // }
 
         if (_renewTimer > 0f)
@@ -162,7 +175,8 @@ public class CharacterController : MonoBehaviour
             _hasSmetana = false;
             smetanaLoseCount++;
 
-            if(smetanaLoseCount > 3) {
+            if (smetanaLoseCount > 3)
+            {
                 OnLose?.Invoke();
             }
         }
@@ -292,7 +306,8 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerStay(Collider collider)
     {
-        if(collider.tag == "Gold") {
+        if (collider.tag == "Gold")
+        {
             GameObject.Destroy(collider.gameObject);
         }
         HandleMiddle(collider);

@@ -38,7 +38,7 @@ public class WinLoseUI : MonoBehaviour
     {
         master.audioMixer.SetFloat("MasterVolume", -80);
         lose.Play();
-        loseImg.gameObject.SetActive(true);
+        // loseImg.gameObject.SetActive(true);
     }
 
     private void OnEndGame(bool hasGoldPot)
@@ -47,12 +47,12 @@ public class WinLoseUI : MonoBehaviour
         if (hasGoldPot)
         {
             winBonus.Play();
-            winBonusImg.gameObject.SetActive(true);
+            // winBonusImg.gameObject.SetActive(true);
         }
         else
         {
             win.Play();
-            winImg.gameObject.SetActive(true);
+            // winImg.gameObject.SetActive(true);
         }
     }
 }
