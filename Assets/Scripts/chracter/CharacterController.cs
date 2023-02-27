@@ -175,7 +175,9 @@ public class CharacterController : MonoBehaviour
             _hasSmetana = false;
             smetanaLoseCount++;
 
-            if (smetanaLoseCount > 3)
+            GameObject.Instantiate(droppedJarPrefab, transform.position - (transform.forward * 0.5f), Quaternion.identity);
+
+            if (smetanaLoseCount > 2)
             {
                 OnLose?.Invoke();
             }
