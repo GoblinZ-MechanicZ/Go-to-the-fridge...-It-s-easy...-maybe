@@ -187,7 +187,7 @@ public class CharacterController : MonoBehaviour
                 goblinAnimator.SetBool("Forward", false);
                 goblinAnimator.SetBool("Backward", false);
 
-                if (currentBlock.HasBonus)
+                if (currentBlock.HasBonus && !_hasGoldPot)
                 {
                     OnBonusFound?.Invoke();
                     _hasGoldPot = true;
@@ -292,6 +292,9 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerStay(Collider collider)
     {
+        if(collider.tag == "Gold") {
+            GameObject.Destroy(collider.gameObject);
+        }
         HandleMiddle(collider);
     }
 

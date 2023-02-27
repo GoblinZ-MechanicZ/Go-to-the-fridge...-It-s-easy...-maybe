@@ -11,6 +11,7 @@ public class VideoPlayerOverlay : MonoBehaviour
     [SerializeField] private float showDelay = 0.2f;
     [SerializeField] private bool isCatAttack = false;
     [SerializeField] private bool isGrabSmetana = false;
+    [SerializeField] private bool isBonus = false;
 
     private CharacterController character;
 
@@ -27,6 +28,7 @@ public class VideoPlayerOverlay : MonoBehaviour
         character = characterController;
         if (isGrabSmetana) character.OnSmetanaFound += ShowVideo;
         if (isCatAttack) character.OnAttacked += ShowVideo;
+        if (isBonus) character.OnBonusFound += ShowVideo;
     }
 
     public void ShowVideo()

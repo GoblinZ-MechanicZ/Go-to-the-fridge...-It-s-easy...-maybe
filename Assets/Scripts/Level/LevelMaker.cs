@@ -302,7 +302,7 @@ public class LevelMaker : MonoBehaviour
 
     [SerializeField] private Transform mazeParent;
     [SerializeField] private CameraFollow cameraFollow;
-    [SerializeField] private VideoPlayerOverlay video1, video2;
+    [SerializeField] private VideoPlayerOverlay video1, video2, video3;
 
     [Header("Maze size")]
     [SerializeField] int maxSizeX = 10;
@@ -382,6 +382,7 @@ public class LevelMaker : MonoBehaviour
                     stressSystem.SetCharacter(characterScript);
                     video1.SetCharacter(characterScript);
                     video2.SetCharacter(characterScript);
+                    video3.SetCharacter(characterScript);
                 }
 
                 if (MBI.getState() == MazeBlockState.Room && EnemyOnLevel < maxEnemyOnLevel)

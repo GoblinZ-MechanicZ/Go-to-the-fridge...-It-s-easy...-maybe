@@ -207,6 +207,7 @@ MonoBehaviour:
   showDelay: 0.3
   isCatAttack: 1
   isGrabSmetana: 0
+  isBonus: 0
 --- !u!1 &199741237
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +384,7 @@ MonoBehaviour:
   cameraFollow: {fileID: 1642046243}
   video1: {fileID: 70566893}
   video2: {fileID: 605512484}
+  video3: {fileID: 937038941}
   maxSizeX: 7
   maxSizeY: 7
   mazeFillValue: 0.907
@@ -985,6 +987,7 @@ MonoBehaviour:
   showDelay: 0.3
   isCatAttack: 0
   isGrabSmetana: 1
+  isBonus: 0
 --- !u!328 &605512485
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -1344,7 +1347,8 @@ MonoBehaviour:
   catAttackRT: {fileID: 8400000, guid: 220e6b3f7f7b66549a1e77abd34f55b3, type: 2}
   showDelay: 0.3
   isCatAttack: 0
-  isGrabSmetana: 1
+  isGrabSmetana: 0
+  isBonus: 1
 --- !u!328 &937038942
 VideoPlayer:
   m_ObjectHideFlags: 0
