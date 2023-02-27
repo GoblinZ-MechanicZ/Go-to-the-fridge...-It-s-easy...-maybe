@@ -12,6 +12,9 @@ public class VideoPlayerOverlay : MonoBehaviour
     [SerializeField] private bool isCatAttack = false;
     [SerializeField] private bool isGrabSmetana = false;
     [SerializeField] private bool isBonus = false;
+    [SerializeField] private bool isWin = false;
+    [SerializeField] private bool isWinBonus = false;
+    [SerializeField] private bool isLose = false;
 
     private CharacterController character;
 
@@ -29,6 +32,8 @@ public class VideoPlayerOverlay : MonoBehaviour
         if (isGrabSmetana) character.OnSmetanaFound += ShowVideo;
         if (isCatAttack) character.OnAttacked += ShowVideo;
         if (isBonus) character.OnBonusFound += ShowVideo;
+        if (isWin) character.OnEndGame += ShowVideo;
+        if (isLose) character.OnLose += ShowVideo;
     }
 
     public void ShowVideo()
@@ -38,6 +43,14 @@ public class VideoPlayerOverlay : MonoBehaviour
         if (showVideo != null) { StopCoroutine(showVideo); }
         showVideo = ShowVideoEnum();
         StartCoroutine(showVideo);
+    }
+
+    public void ShowVideo(bool hasGold) {
+        if(isWin && !hasGold) {
+            ShowVideo();
+        } else if(isWinBonus && hasGold) {
+            ShowVideo();
+        }
     }
 
     public void ShowVideo(EnemyType enemyType)
