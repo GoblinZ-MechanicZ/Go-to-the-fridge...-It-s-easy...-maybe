@@ -12,6 +12,8 @@ public class VideoPlayerOverlay : MonoBehaviour
     [SerializeField] private bool isCatAttack = false;
     [SerializeField] private bool isGrabSmetana = false;
 
+    private CharacterController character;
+
     private bool show = false;
     private IEnumerator showVideo;
     private void Start()
@@ -20,9 +22,11 @@ public class VideoPlayerOverlay : MonoBehaviour
         showVideo = ShowVideoEnum();
     }
 
-    public void SetCharacter(CharacterController characterController) {
-        if(isGrabSmetana) characterController.OnSmetanaFound += ShowVideo;
-        if(isCatAttack) characterController.OnAttacked += ShowVideo;
+    public void SetCharacter(CharacterController characterController)
+    {
+        character = characterController;
+        if (isGrabSmetana) character.OnSmetanaFound += ShowVideo;
+        if (isCatAttack) character.OnAttacked += ShowVideo;
     }
 
     public void ShowVideo()
@@ -34,9 +38,12 @@ public class VideoPlayerOverlay : MonoBehaviour
         StartCoroutine(showVideo);
     }
 
-    public void ShowVideo(EnemyType enemyType) {
-        if(enemyType == EnemyType.Cat) {
-            ShowVideo();
+    public void ShowVideo(EnemyType enemyType)
+    {
+        if (enemyType == EnemyType.Cat)
+        {
+            if (character.HasSmetana)
+                ShowVideo();
         }
     }
 
@@ -52,5 +59,6 @@ public class VideoPlayerOverlay : MonoBehaviour
         catAttackUI.SetActive(false);
         player.enabled = false;
         show = false;
+        if (isCatAttack) character.OnAfterAttacked?.Invoke();
     }
 }

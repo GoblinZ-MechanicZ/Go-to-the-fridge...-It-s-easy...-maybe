@@ -25,7 +25,7 @@ public class CharacterStressSystem : MonoBehaviour
     {
         character = characterController;
         character.OnSmetanaFound += OnSmetanaFound;
-        character.OnAttacked += OnAttacked;
+        character.OnAfterAttacked += OnAfterAttacked;
         character.OnPanic += OnPanic;
 
         StartCoroutine(DoUpdate());
@@ -41,9 +41,12 @@ public class CharacterStressSystem : MonoBehaviour
         _stressLevel = 0f;
     }
 
-    private void OnAttacked(EnemyType enemyType)
+    private void OnAfterAttacked()
     {
-
+        if (character.HasSmetana)
+        {
+            _stressLevel = _maxStressLevel;
+        }
     }
 
     private IEnumerator DoUpdate()
@@ -53,8 +56,22 @@ public class CharacterStressSystem : MonoBehaviour
         {
             if (!character.WasAttacked)
             {
-                _stressLevel += (character.HasSmetana) ? globalSettings.stressPerSecond / 2 : globalSettings.stressPerSecond;
-                _stressLevel += (character.RoomWithEnemy) ? ((character.HasSmetana) ? globalSettings.stressModWhenEnemyInRoom / 2 : globalSettings.stressModWhenEnemyInRoom) : 0;
+                _stressLevel += globalSettings.stressPerSecond;
+                if (character.RoomWithEnemy)
+                {
+                    switch (character.EnemyType)
+                    {
+                        case EnemyType.Bat:
+                            _stressLevel += globalSettings.stressWhenBatFlyAround;
+                            break;
+                        case EnemyType.Cat:
+                            _stressLevel += globalSettings.stressWhenCatAround;
+                            break;
+                        case EnemyType.Spider:
+                            _stressLevel += globalSettings.stressWhenSpiderAround;
+                            break;
+                    }
+                }
                 _stressLevel = Mathf.Clamp(_stressLevel, _stressLevel, _maxStressLevel);
             }
 

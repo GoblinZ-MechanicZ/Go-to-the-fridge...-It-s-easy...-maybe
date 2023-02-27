@@ -34,16 +34,21 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private AudioSource panicSource;
 
     public System.Action<EnemyType> OnAttacked;
+    public System.Action OnAfterAttacked;
     public System.Action OnSmetanaFound;
+    public System.Action OnBonusFound;
     public System.Action OnPanic;
     public System.Action OnLose;
     public System.Action<bool> OnEndGame; //true has gold; false without gold
+
+    private int smetanaLoseCount = 0;
 
     public bool HasSmetana { get { return _hasSmetana; } }
     public bool IsCrouch { get { return _isCrouch; } }
     public bool IsMoving { get { return _isMoving; } }
     public bool RoomWithEnemy { get { return currentBlock.HasEnemy; } }
     public bool WasAttacked { get { return _wasAttacked; } }
+    public EnemyType EnemyType { get { return currentBlock.enemyType; } }
 
     private float _turnTimer = 0f;
     private float _renewTimer = 0f;
@@ -75,6 +80,15 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
+        // if(Input.GetKeyDown(KeyCode.I)) {
+        //     OnLose?.Invoke();
+        // }
+        // if(Input.GetKeyDown(KeyCode.O)) {
+        //     OnEndGame?.Invoke(false);
+        // }
+        // if(Input.GetKeyDown(KeyCode.P)) {
+        //     OnEndGame?.Invoke(true);
+        // }
 
         if (_renewTimer > 0f)
         {
@@ -142,6 +156,16 @@ public class CharacterController : MonoBehaviour
     public void TakeDamage(EnemyType enemyType)
     {
         OnAttacked?.Invoke(enemyType);
+        if (_hasSmetana)
+        {
+            smetanaJar.SetActive(false);
+            _hasSmetana = false;
+            smetanaLoseCount++;
+
+            if(smetanaLoseCount > 3) {
+                OnLose?.Invoke();
+            }
+        }
     }
 
     //return true if can't move
@@ -165,7 +189,8 @@ public class CharacterController : MonoBehaviour
 
                 if (currentBlock.HasBonus)
                 {
-                    Debug.Log("Room with bonus");
+                    OnBonusFound?.Invoke();
+                    _hasGoldPot = true;
                 }
                 else if (currentBlock.IsFinish)
                 {
@@ -175,7 +200,7 @@ public class CharacterController : MonoBehaviour
                 }
                 else if (_hasSmetana && currentBlock.IsStart)
                 {
-                    OnEndGame(_hasGoldPot);
+                    OnEndGame?.Invoke(_hasGoldPot);
                 }
             }
             return false;
@@ -220,6 +245,8 @@ public class CharacterController : MonoBehaviour
 
     private void HandleTurn(float dir)
     {
+        if (IsMoving) return;
+
         if (_turnTimer > 0f)
         {
             _turnTimer = Mathf.Clamp(_turnTimer - Time.deltaTime, 0, turnSpeed);
@@ -254,8 +281,8 @@ public class CharacterController : MonoBehaviour
             _isTurn = true;
             goblinLookDir = (LookDirection)_look;
 
-            goblinAnimator.ResetTrigger("Attack");
-            goblinAnimator.ResetTrigger("HevyAttack");
+            // goblinAnimator.ResetTrigger("Attack");
+            // goblinAnimator.ResetTrigger("HevyAttack");
             _turnTimer = turnSpeed;
             startRotate = goblinAnimator.transform.rotation;
             endRotate = Quaternion.Euler(0f, GetDirectionAngle(goblinLookDir), 0f);
@@ -271,6 +298,15 @@ public class CharacterController : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         HandleRoom(collider);
+        if (collider.tag == "Enemy")
+        {
+            var cat = collider.gameObject.GetComponent<CatController>();
+            if (cat != null)
+            {
+                TakeDamage(EnemyType.Cat);
+                Debug.Log("PLAYER DIIIIIIE");
+            }
+        }
     }
 
     private void HandleMiddle(Collider collider)

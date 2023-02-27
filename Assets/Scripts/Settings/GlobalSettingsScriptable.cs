@@ -7,6 +7,13 @@ public class GlobalSettingsScriptable : ScriptableObject
     public float brightness = 50f;
 
     [Space()]
+    [Header("CatSettings")]
+    public float catTurnTime = 0.5f;
+    public float catMoveTime = 4f;
+    public float catWaitTime = 15f;
+
+
+    [Space()]
     [Header("Stress")]
     public float heartVolumeReduction = 3f;
     public float panicMoves = 15f;
@@ -19,8 +26,8 @@ public class GlobalSettingsScriptable : ScriptableObject
     public float stressPerSecond = 0.16f;
     public float stressChangeWhenLoseJar = 100f;
     public float stressAfterPanic = 50f;
-    public float stressChangeWhenTakeBonus = 0f;
-    public float stressModWhenEnemyInRoom = 1f;
-    public float stressWhenBatFlyAround = 10f;
+    public float stressWhenBatFlyAround = 4f;
+    public float stressWhenCatAround = 1f;
+    public float stressWhenSpiderAround = 2f;
 
 }

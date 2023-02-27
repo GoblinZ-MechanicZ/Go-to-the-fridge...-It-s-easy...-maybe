@@ -21,12 +21,16 @@ public class RoomBlock : MonoBehaviour
     public bool HasEnemy { get { return _hasEnemy; } }
     public bool HasBonus { get { return _hasBonus; } }
 
+    public EnemyType enemyType { get { return _enemyType; } }
+
     private LevelMaker.MazeBlockInfo mazeBlockInfo;
     private RoomDirections _roomDirections;
     private bool _hasBonus;
     private bool _hasEnemy;
     private bool _isFinish;
     private bool _isStart;
+
+    private EnemyType _enemyType;
 
     public void OnTriggerEnter(Collider collider)
     {
@@ -56,8 +60,7 @@ public class RoomBlock : MonoBehaviour
     {
         mazeBlockInfo = info;
 
-        _isStart = mazeBlockInfo.getState() == LevelMaker.MazeBlockState.Start;
-        _isFinish = mazeBlockInfo.getState() == LevelMaker.MazeBlockState.Finish;
+        UpdateInfo();
 
         var transitions = mazeBlockInfo.getTransition();
         for (int i = 0; i < transitions.Count; i++)
@@ -68,6 +71,47 @@ public class RoomBlock : MonoBehaviour
             if (vec.y > 0) _roomDirections.forward = true;
             else if (vec.y < 0) _roomDirections.backward = true;
         }
+    }
 
+    private void UpdateInfo()
+    {
+        _isStart = mazeBlockInfo.getState() == LevelMaker.MazeBlockState.Start;
+        _isFinish = mazeBlockInfo.getState() == LevelMaker.MazeBlockState.Finish;
+        _hasBonus = mazeBlockInfo.getEntity() == 100;
+        _hasEnemy = !_hasBonus && mazeBlockInfo.getEntity() >= 0;
+
+        if (_hasEnemy)
+        {
+            switch (mazeBlockInfo.getEntity())
+            {
+                case 0:
+                case 1:
+                case 2:
+                    _enemyType = EnemyType.Cat;
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    _enemyType = EnemyType.Spider;
+                    break;
+            }
+        }
+
+        if (mazeBlockInfo.getTunelType() == 2)
+        {
+            _hasEnemy = true;
+            _enemyType = EnemyType.Bat;
+        }
+
+    }
+
+    float timer = 3f;
+    bool fired = false;
+    private void LateUpdate()
+    {
+        if(timer > 0) { timer -= Time.deltaTime; } else if(!fired) {
+            fired = true;
+            UpdateInfo();
+        }
     }
 }

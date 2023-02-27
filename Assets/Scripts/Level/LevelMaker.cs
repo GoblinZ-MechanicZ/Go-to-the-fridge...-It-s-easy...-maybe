@@ -34,6 +34,16 @@ public class LevelMaker : MonoBehaviour
         MazeBlockState State;
         List<IntVector2> transition;
         int mazeEntity = -1;
+        int tunelType = -1;
+
+
+        public int getTunelType() {
+            return tunelType;
+        }
+
+        public void setTunelType(int _tunelType){
+            tunelType = _tunelType;
+        }
 
         public int getEntity()
         {
@@ -339,7 +349,7 @@ public class LevelMaker : MonoBehaviour
     void mazeInstans(Maze _maze)
     {
 
-
+        
         Vector3 shiftValue = new Vector3(blockSize.x, blockSize.y, blockSize.z);
         for (int my = 0; my < maxSizeMatrix.y; my++)
         {
@@ -415,7 +425,7 @@ public class LevelMaker : MonoBehaviour
             GameObject pref = prefEnemy[rnd];
             IntVector2 adressAi = mazeAllBlock[indexAi].getAdress();
             Vector3 posAi = new Vector3(adressAi.x * shiftValue.x, 0, adressAi.y * shiftValue.y);
-            Instantiate(pref, posAi, Quaternion.identity, mazeParent);
+            var enemy = Instantiate(pref, posAi, Quaternion.identity, mazeParent);
             EnemyOnLevel++;
             mazeAllBlock[indexAi].setEntity(rnd);
 
@@ -469,7 +479,9 @@ public class LevelMaker : MonoBehaviour
                         }
                         else
                         {
-                            blockPref = prefRoomTunel[(int)(UnityEngine.Random.Range(0, prefRoomTunel.Length - 1))];
+                            var tunelIndex = (int)(UnityEngine.Random.Range(0, prefRoomTunel.Length - 1));
+                            block.setTunelType(tunelIndex);
+                            blockPref = prefRoomTunel[tunelIndex];
                             if (block.getTransition()[0].x != 0) angle = 90; else angle = 0;
 
                         }

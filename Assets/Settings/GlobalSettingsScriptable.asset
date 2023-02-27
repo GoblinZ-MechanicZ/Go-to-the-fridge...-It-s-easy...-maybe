@@ -14,15 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   masterVolume: 0
   brightness: 50
+  catTurnTime: 0.5
+  catMoveTime: 4
+  catWaitTime: 0.1
   heartVolumeReduction: 1
   panicMoves: 5
-  stressChillTime: 15
+  stressChillTime: 10
   panicAtMaxStressLevel: 1
   turnOffTorchWhenPanic: 1
   maxStressLevel: 100
-  stressPerSecond: 5
+  stressPerSecond: 0.16
   stressChangeWhenLoseJar: 100
   stressAfterPanic: 50
-  stressChangeWhenTakeBonus: 0
-  stressModWhenEnemyInRoom: 1
   stressWhenBatFlyAround: 10
+  stressWhenCatAround: 1
+  stressWhenSpiderAround: 2
