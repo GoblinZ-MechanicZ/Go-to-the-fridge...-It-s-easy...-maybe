@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class EntityInputAction : EntityAction
 {
-
-    public override void InvokeAction()
+    public KeyCode Key;
+    public EntityAction action;
+    public override void Update(Entity entity)
     {
-        throw new System.NotImplementedException();
+        if(Input.GetKeyDown(Key)) {
+            action.Update(entity);
+        }
     }
 }
