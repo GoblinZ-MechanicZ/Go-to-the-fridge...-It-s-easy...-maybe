@@ -57,8 +57,6 @@ public class EntityEditor : Editor
                 element = EditorGUILayout.ObjectField(element, typeof(EntityAction), false) as EntityAction;
                 if (element == null) continue;
                 var fields = element.GetType().GetFields();
-                Debug.Log(element.GetType());
-                Debug.Log(element.GetType().GetFields().Length);
                 EditorGUI.indentLevel++;
                 for (int j = 0; j < fields.Length; j++)
                 {
