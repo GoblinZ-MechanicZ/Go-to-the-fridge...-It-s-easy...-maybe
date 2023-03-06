@@ -1,4 +1,6 @@
-public abstract class EntityAction
+using UnityEngine;
+
+public abstract class EntityAction : ScriptableObject
 {
-    public abstract void Update(Entity _entity);
+    public abstract void UpdateAction(Entity _entity);
 }
